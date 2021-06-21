@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="shortcut icon" href="../../assets/img/logo/cropped-logo-transparent.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/grid.css">
+    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="../../assets/js/sidebar.js"></script>
+    <script src="../../assets/js/chart.js"></script>
+</head>
+<body>
+    <div class="admin__preview">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar__log__box">
+                <a href="" class="flex-row-center">
+                    <img class="logo-image" src="../../assets/img/logo/cropped-logo-transparent.png" alt="">
+                </a>
+            </div>
+            <div class="sidebar__menu">
+                <ul class="sidebar__nav">
+                    <li class="tab__page-item">
+                        <span class="tab__page-menu font-rajdhani tab__page__active" href="">
+                            <i class="fas fa-home pad-right-10"></i>
+                            Trang chủ
+                        </span>
+                        <ul class="page__list">
+                            <li class="page__item">
+                                <a class="page__link tab__page__active" href="">Tổng quan</a>
+                            </li>
+                            <li class="page__item">
+                                <a class="page__link" href="">Trang giới thiệu</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="tab__page-item">
+                        <span class="tab__page-menu font-rajdhani" href="">
+                            <i class="fas fa-user-alt pad-right-10"></i>
+                            Tài khoản
+                        </span>
+                        <ul class="page__list">
+                            <li class="page__item">
+                                <a class="page__link" href="">Danh sách</a>
+                            </li>
+                            <li class="page__item">
+                                <a class="page__link" href="">Thêm tài khoản</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="tab__page-item">
+                        <span class="tab__page-menu font-rajdhani" href="">
+                            <i class="fas fa-feather pad-right-10"></i>
+                            Bài viết
+                        </span>
+                        <ul class="page__list">
+                            <li class="page__item">
+                                <a class="page__link" href="">Danh sách</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        <div class="right-wrapper">
+            <!-- Header -->
+            <div class="header">
+                <div class="search__field l-4 m-0 c-0">
+                    <span class="search__field__submit">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input class="search__field__input" type="text" name="name" placeholder="Tìm kiếm">
+                </div>
+                <div class="admin__field">
+                    <span class="admin-username font-rajdhani">Admin</span>
+                    <figure>
+                        <img class="circle-avatar admin-avatar" src="../../assets/img/avatar/186608.jpg" alt="">
+                    </figure>
+                    <ul class="admin__action-list">
+                        <li class="admin__action-item"> 
+                            <a class="admin__action-link font-rajdhani" href="">
+                                Profile
+                                <i class="fas fa-cog"></i>
+                            </a>
+                        </li>
+                        <li class="admin__action-item"> 
+                            <a class="admin__action-link font-rajdhani" href="">
+                                Đổi mật khẩu
+                                <i class="fas fa-key"></i>
+                            </a>
+                        </li>
+                        <li class="admin__action-item"> 
+                            <a class="admin__action-link font-rajdhani" href="">
+                                Đăng xuất
+                                <i class="fas fa-sign-out-alt"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content__wrapper">
+                <div class="row no-gutters">
+                    <div class="l-3 m-3 c-6">
+                        <div class="stretch__card font-rajdhani">
+                            <div class="stretch__card__heading" style="color: #7773b8">
+                                Tài khoản
+                            </div>
+                            <div class="stretch__card__body">
+                                100
+                            </div>
+                        </div>
+                    </div>
+                    <div class="l-3 m-3 c-6">
+                        <div class="stretch__card font-rajdhani">
+                            <div class="stretch__card__heading" style="color: #3cb2ad">
+                                Đang online
+                            </div>
+                            <div class="stretch__card__body">
+                                100
+                            </div>
+                        </div>
+                    </div>
+                    <div class="l-3 m-3 c-6">
+                        <div class="stretch__card font-rajdhani">
+                            <div class="stretch__card__heading" style="color: #eaa63f">
+                                Lượt truy cập
+                            </div>
+                            <div class="stretch__card__body">
+                                59
+                            </div>
+                        </div>
+                    </div>
+                    <div class="l-3 m-3 c-6">
+                        <div class="stretch__card font-rajdhani">
+                            <div class="stretch__card__heading" style="color: #fc9398">
+                                Bài viết
+                            </div>
+                            <div class="stretch__card__body">
+                                100
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row no-gutters mrg-top-80">
+                    <div class="l-6 m-6 c-12">
+                        <div class="client__log">
+                            <h3 class="font-rajdhani">Client log</h3>
+                            <table class="client__log-table">
+                                <tr style="display: flex;">
+                                    <th class="table__column font-rajdhani">Id</th>
+                                    <th class="table__column font-rajdhani">Username</th>
+                                    <th class="table__column font-rajdhani">Time</th>
+                                </tr>
+                                <tr style="display: flex;">
+                                    <th class="row__cell font-rajdhani">id</th>
+                                    <th class="row__cell font-rajdhani">
+                                        <div class="user__log__name">
+                                            <img class="circle-avatar user__log__thumb" src="../../assets/img/avatar/186608.jpg" alt="">
+                                            <p>Gaughegom</p>
+                                        </div>
+                                    </th>
+                                    <th class="row__cell font-rajdhani">2021-06-21 23:10:00</th>
+                                </tr>
+                                <tr style="display: flex;">
+                                    <th class="row__cell font-rajdhani">id</th>
+                                    <th class="row__cell font-rajdhani">
+                                        <div class="user__log__name">
+                                            <img class="circle-avatar user__log__thumb" src="../../assets/img/avatar/186608.jpg" alt="">
+                                            <p>Gaughegom</p>
+                                        </div>
+                                    </th>
+                                    <th class="row__cell font-rajdhani">2021-06-21 23:10:00</th>
+                                </tr>
+                                <tr style="display: flex;">
+                                    <th class="row__cell font-rajdhani">id</th>
+                                    <th class="row__cell font-rajdhani">
+                                        <div class="user__log__name">
+                                            <img class="circle-avatar user__log__thumb" src="../../assets/img/avatar/186608.jpg" alt="">
+                                            <p>Gaughegom</p>
+                                        </div>
+                                    </th>
+                                    <th class="row__cell font-rajdhani">2021-06-21 23:10:00</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="l-6 m-6 c-12">
+                        <div class="chart__box">
+                            <canvas id="line__chart-user"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+    setSidebarHeight();
+    LineChart();
+</script>
