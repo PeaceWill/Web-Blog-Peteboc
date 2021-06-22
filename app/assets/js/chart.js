@@ -3,14 +3,35 @@ function LineChart() {
     var lineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-                        'Oct', 'Nov', 'Dec'],
+            labels: ['Mon', 'Tue', 'Wes', 'Thur', 'Fri', 'Sat', 'Sun'],
             datasets: [
                 {
-                    label: 'User 2021',
-                    data: [0,5,10,13,23,24,24,25,26,26,30,32]
+                    label: 'Post in week',
+                    data: [0,5,20,13,23,14,4],
+                    backgroundColor: '#fff',
+                    borderColor: '#4885a2'
+                },
+                {
+                    label: 'Log in week',
+                    data: [0,1,4,11,33,4,24],
+                    backgroundColor: '#fff',
+                    borderColor: '#b29d50'
                 }
-            ]
+            ],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display:false
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display:false
+                    }   
+                }]
+            }
         }
     });
 }

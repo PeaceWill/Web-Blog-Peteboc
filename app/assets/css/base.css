@@ -10,6 +10,11 @@
     --header-hover: rgb(116 150 182);
     /* height */
     --header-height: 70px;
+    /* card color */
+    --red-card: #fc9398;
+    --yellow-card: #eaa63f;
+    --green-card: #3cb2ad;
+    --purple-card: #7773b8;
 }
 
 * {
@@ -167,10 +172,19 @@ a {
     font-family: 'Rajdhani', sans-serif;
 }
 
+.font-roboto-300 {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.font-28 {
+    font-size: 28px !important;
+}
+
 /* other */
 .main {
     margin-top: var(--header-height);
-    background: #f2f2f2;
+    background: var(--blue-white-color);
     padding-bottom: 40px;
 }
 
@@ -192,6 +206,14 @@ a {
 
 .mrg-top-80 {
     margin-top: 80px;
+}
+
+.mrg-top-12 {
+    margin-top: 12px;
+}
+
+.pad-30 {
+    padding: 30px;
 }
 
 .border-radius-smooth {
@@ -236,4 +258,24 @@ a {
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+}
+
+.submit-button--smooth {
+    font-size: 18px;
+    padding: 12px 20px;
+    min-width: 200px;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    background: var(--primary-color);
+    color: var(--blue-white-color);
+    cursor: pointer;
+}
+
+.hover-08:hover {
+    opacity: 0.8;
+}
+
+.max-width-30pr {
+    max-width: 30%;
 }
