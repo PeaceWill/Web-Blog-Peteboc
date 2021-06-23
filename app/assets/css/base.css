@@ -35,6 +35,10 @@ ul {
     list-style: none;
 }
 
+li {
+    cursor: default;
+}
+
 a {
     text-decoration: none;
 }
@@ -297,4 +301,23 @@ a {
 
 .max-width-30pr {
     max-width: 30%;
+}
+
+.display-none {
+    display: none;
+}
+
+.form__edit-footer {
+    padding: 8px 18px 12px;
+}
+
+.edit__button {
+    width: 100%;
+    padding: 8px 0;
+    font-size: 16px;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    background: var(--primary-color);
+    color: var(--white-color);
 }

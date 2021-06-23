@@ -150,6 +150,11 @@
                                 </div>
                                 <span class="post__setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__setting-list box-shadow-6 font-rajdhani">
+                                        <li id="post__setting-edit" class="post__setting-select">Edit</li>
+                                        <li id="post__setting-report" class="post__setting-select">Report</li>
+                                        <li id="post__setting-remove" class="post__setting-select">Remove</li>
+                                    </ul>
                                 </span>
                             </div>
                             <div class="post__content">
@@ -178,6 +183,10 @@
                                 </div>
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
+                                        <li class="post__user__comment-setting-select">Edit</li>
+                                        <li class="post__user__comment-setting-select">Remove</li>
+                                    </ul>
                                 </span>
                             </div>
                             <div class="post__user__comment">
@@ -188,9 +197,12 @@
                                 </div>
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
+                                        <li class="post__user__comment-setting-select">Edit</li>
+                                        <li class="post__user__comment-setting-select">Remove</li>
+                                    </ul>
                                 </span>
-                            </div>
-                            <div class="post__user__comment">
+                            </div><div class="post__user__comment">
                                 <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
                                 <div class="post__user__comment-body">
                                     <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
@@ -198,7 +210,14 @@
                                 </div>
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
+                                        <li class="post__user__comment-setting-select">Edit</li>
+                                        <li class="post__user__comment-setting-select">Remove</li>
+                                    </ul>
                                 </span>
+                            </div>
+                            <div class="post__comment-load">
+                                Xem tất cả bình luận
                             </div>
                         </div>
                     </div>
@@ -222,6 +241,11 @@
                                 </div>
                                 <span class="post__setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__setting-list box-shadow-6 font-rajdhani">
+                                        <li id="post__setting-edit" class="post__setting-select">Edit</li>
+                                        <li id="post__setting-report" class="post__setting-select">Report</li>
+                                        <li id="post__setting-remove" class="post__setting-select">Remove</li>
+                                    </ul>
                                 </span>
                             </div>
                             <div class="post__content">
@@ -254,13 +278,17 @@
                         </div>
                         <div class="post__comment-area">
                             <div class="post__user__comment">
-                                <img class="post__avatar circle-avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
+                                <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
                                 <div class="post__user__comment-body">
                                     <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
                                     <div class="post__user__comment-content">Đây là comment reply để test  Đây là comment reply để test Đây là comment reply để test Đây là comment reply để test</div>
                                 </div>
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
+                                        <li class="post__user__comment-setting-select">Edit</li>
+                                        <li class="post__user__comment-setting-select">Remove</li>
+                                    </ul>
                                 </span>
                             </div>
                             <div class="post__user__comment">
@@ -271,6 +299,10 @@
                                 </div>
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
+                                        <li class="post__user__comment-setting-select">Edit</li>
+                                        <li class="post__user__comment-setting-select">Remove</li>
+                                    </ul>
                                 </span>
                             </div>
                             <div class="post__user__comment">
@@ -281,10 +313,14 @@
                                 </div>
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
+                                    <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
+                                        <li class="post__user__comment-setting-select">Edit</li>
+                                        <li class="post__user__comment-setting-select">Remove</li>
+                                    </ul>
                                 </span>
                             </div>
                             <div class="post__comment-load">
-                                Xem tắt cả bình luận
+                                Xem tất cả bình luận
                             </div>
                         </div>
                     </div>
@@ -292,7 +328,48 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal edit -->
+    <div class="edit__post-frame">
+        <div class="modal__overlay">
+            <div class="modal__body" style="width: 540px;">
+                <form class="form__edit__post" action="" method="POST">
+                    <div class="form__edit-heading font-rajdhani">
+                        Edit post
+                        <span id="close__edit">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </div>
+                    <div class="form__edit-body">
+                        <div class="form__edit-body--top">
+                            <img class="circle-avatar post__avatar" src="./assets/img/avatar/186608.jpg" alt="">
+                            <div class="flex-col pad-left-12 flex-growth-2">
+                                <span class="font-verdana--geneva post__owner">gaughegom</span>
+                                <span class="edit__mode">
+                                    <i class="fas fa-unlock-alt"></i>
+                                    <i class="fas fa-users" style="display: none;"></i>
+                                    <ul class="mode-list box-shadow-6 font-rajdhani">
+                                        <li class="mode-select">Private</li>
+                                        <li class="mode-select">Public</li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form__edit-content">
+                            Test UI
+                        </div>
+                    </div>
+                    <div class="form__edit__image">
+                        <img class="post__image" src="./assets/img/post/pixel-slide1.jpg" alt="">
+                        <label class="hover-08" for="edit-post-image">Edit</label>
+                        <input id="edit-post-image" type="file">
+                    </div>
+                    <div class="form__edit-footer">
+                        <button class="edit__button">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Go to top -->
     <div class="teleport__top">
         <a href="#top">
@@ -323,6 +400,8 @@
     
     <script>
         catchEventLog();
+        openEditPostModal();
+        closeEditPostModal();
     </script>
 </body>
 </html>

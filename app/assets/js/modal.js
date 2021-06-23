@@ -17,3 +17,17 @@ function catchEventLog() {
         }
     }
 }
+
+function openEditPostModal() {
+    var openButton = document.querySelector('#post__setting-edit');
+    openButton.onclick = () => {
+        document.querySelector('.edit__post-frame').style.display = 'block';
+    }
+}
+
+function closeEditPostModal() {
+    var closeButton = document.querySelector('#close__edit');
+    closeButton.onclick = () => {
+        document.querySelector('.edit__post-frame').style.display = 'none';
+    }
+}
