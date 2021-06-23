@@ -186,6 +186,7 @@ a {
     margin-top: var(--header-height);
     background: var(--blue-white-color);
     padding-bottom: 40px;
+    min-height: 100vh;
 }
 
 .box-shadow-6 {
@@ -216,17 +217,35 @@ a {
     padding: 30px;
 }
 
+.pad-60 {
+    padding: 60px;
+}
+
 .border-radius-smooth {
     border: none;
     border-radius: 12px;
 }
 
 .ground-color-white {
-    background-color: #f8f8f8;
+    background-color: var(--white-color);
 }
 
 .float-right {
     float: right;
+}
+
+.flex-align {
+    display: flex;
+    align-items: center;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
 }
 
 .flex-row-center {

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <link rel="shortcut icon" href="../../assets/img/logo/cropped-logo-transparent.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/grid.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script src="../../assets/js/modal.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- header -->
+    <header class="header box-shadow-6">
+        <div class="grid wide">
+            <div class="row">
+                <div class="nav__header">
+                    <div class="logo__wrapper">
+                        <a class="logo__link" href="index.html">
+                            <img class="logo__image" src="../../assets/img/logo/cropped-logo-transparent.png" alt="">
+                        </a>
+                    </div>
+                    <ul class="nav__list">
+                        <li class="nav__list-item">
+                            <a class="nav__list-link" href="about.html">
+                                Giới thiệu
+                            </a>
+                        </li>
+                        <li class="nav__list-item">
+                            <span class="nav__list-link">
+                                Thông báo
+                                <i class="far fa-bell"></i>
+                            </span>
+                            <!-- notification -->
+                            <ul class="nav__notification">
+                                <li class="nav__notification-item none-read">
+                                    <a class="nav__notification-link" href="">
+                                        <div class="notification__content">
+                                            <span class="notification__username">
+                                                Gaughegom
+                                            </span> 
+                                            đã comment trên một post của bạn
+                                        </div>
+                                        <span class="notification__none-read"></span>
+                                    </a>
+                                </li>
+                                <li class="nav__notification-item">
+                                    <a class="nav__notification-link" href="">
+                                        <div class="notification__content">
+                                            <span class="notification__username">
+                                                Gaughegom
+                                            </span> 
+                                            đã comment trên một post của bạn
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav__list-item">
+                            <span class="nav__list-link">
+                                Tài khoản
+                                <i class="far fa-user"></i>
+                            </span>
+                            <!-- list user action -->
+                            <ul class="nav__user__action">
+                                <li id="open__login__modal" class="user__action-item">
+                                    <i class="fas fa-user pad-right-10"></i>
+                                    Đăng nhập 
+                                </li>
+                                <li id="open__signup__modal" class="user__action-item">
+                                    <i class="fas fa-signature pad-right-10"></i>
+                                    Đăng ký
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+   <!-- main -->
+   <div class="main">
+       <div class="grid wide">
+           <div class="row ground-color-white border-radius-smooth">
+               <!-- side bar -->
+               <div class="l-3 m-3 c-3">
+                    <ul class="sidebar-list font-rajdhani">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <i class="fas fa-user"></i>
+                                Tài khoản
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <i class="fas fa-history"></i>
+                                Lịch sử
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <i class="fas fa-key"></i>
+                                Token
+                            </a>
+                        </li>
+                    </ul>
+               </div>
+               <!-- info -->
+               <div class="row l-9 m-9 c-9">
+                   <div class="l-12 m-12 c-12">
+                       <div class="pad-30">
+                           <form class="form__profile" method="GET" action="">
+                                <div class="form__profile-heading font-rajdhani">
+                                    <h3>Tạo token</h3>
+                                </div>
+                                <div class="form__profile-group">
+                                    <div class="flex-row flex-align" style="width: 100%;">
+                                        <input class="form__profile-input" type="text">
+                                        <span class="copy__token">
+                                            <i class="far fa-copy"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form__profile-group">
+                                    <button class="submit-button--smooth">Tạo mã</button>
+                                </div>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</body>
+</html>

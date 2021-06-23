@@ -573,7 +573,7 @@
 /* User page */
 .white__background__wrap {
     width: 100%;
-    height: 300px;
+    height: auto;
     margin-top: var(--header-height);
     background: var(--white-color);
 }
@@ -581,6 +581,8 @@
 .user__info__wrap {
     width: 100%;
     padding: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .user__info__avatar-box {
@@ -590,4 +592,216 @@
 .user__info__avatar {
     width: 120px;
     object-fit: contain;
+}
+
+.user__info-box {
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 18px;
+    color: var(--gray-text-color);
+}
+
+.user__info-realname {
+    display: flex;
+    padding: 4px 0;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.user__info-post--public {
+    display: flex;
+    align-items: center;
+    padding: 4px 0 12px;
+    color: #727272;
+    font-size: 16px;
+}
+
+.user__info-desc {
+    padding: 8px 0;
+    font-size: 18px;
+    color: var(--gray-text-color);
+    font-style: italic;
+    line-height: 22px;
+}
+
+/* User profile */
+.sidebar-list {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidebar-item {
+    width: 100%;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 8px;
+    font-size: 16px;
+    color: var(--gray-text-color);
+}
+
+.sidebar-link:hover {
+    transition: 0.2s;
+    border-left: 2px solid var(--primary-color);
+}
+
+.sidebar-link i {
+    margin-right: 8px;
+}
+
+.form__profile {
+    padding: 20px;
+    width: 100%;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+}
+
+.form__profile-heading {
+    padding: 8px;
+    font-size: 18px;
+    color: var(--gray-text-color);
+    position: absolute;
+    top: -18px;
+    background: var(--white-color);
+}
+
+.form__profile-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px 0;
+}
+
+.form__profile-group label {
+    padding: 8px 0;
+    font-size: 16px;
+    color: var(--gray-text-color);
+}
+
+.form__profile-input {
+    width: 90%;
+    padding: 8px 12px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    background: var(--blue-white-color);
+    resize: none;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.form__profile-gender {
+    display: flex;
+    align-items: center;
+}
+
+.form__profile-gender label {
+    padding-right: 8px;
+}
+
+.profile__avatar {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+}
+
+.button__wrap {
+    position: relative;
+    z-index: 2;
+}
+
+.button__wrap label {
+    font-size: 16px;
+    padding: 8px 12px;
+    background: var(--primary-color);
+    border-radius: 8px;
+    color: var(--white-color);
+}
+
+.button__wrap input {
+    position: absolute;
+    left: 5px;
+    top: -3px;
+    font-size: 14px;
+    z-index: -1;
+}
+
+.copy__token {
+    background: var(--blue-white-color);
+    margin-left: 8px;
+    padding: 8px 12px;
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Search */
+.post__mini {
+    padding: 20px;
+    min-height: auto;
+}
+
+.post__mini__heading {
+    display: flex;
+    align-items: center;
+}
+
+.post__mini__owner {
+    margin-left: 14px;
+    font-size: 20px;
+    color: var(--gray-text-color);
+}
+
+.post__mini__body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 12px 0;
+    font-size: 16px;
+}
+
+.post__mini__content {
+    color: var(--text-color);
+    font-size: 18px;
+    flex-grow: 2;
+}
+
+.post__mini-time {
+    color: #666;
+    font-size: 14px;
+}
+
+.post__mini__image-box {
+    width: 100px;
+    height: 100px;
+    padding: 8px;
+}
+
+.post__mini-image {
+    width: 100%;
+    object-fit: contain;
+}
+
+.post__mini__footer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #ccc;
+    font-size: 12px;
+    color: var(--gray-text-color);
+}
+
+.post__mini__footer span {
+    margin: 0 8px;
 }

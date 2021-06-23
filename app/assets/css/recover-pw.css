@@ -1,0 +1,98 @@
+/* 
+    Recover password
+*/
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form__recover {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px;
+    background: var(--white-color);
+    border-radius: 12px;
+    min-width: 500px;
+}
+
+.form__recover-group {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.form__reset-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.form__recover-group label, .form__reset-group label {
+    font-size: 16px;
+    color: var(--gray-text-color);
+}
+
+.form__recover-input {
+    font-size: 18px;
+    flex-grow: 2;
+    margin-left: 12px;
+    padding: 8px 12px 2px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #aeaeae;
+}
+
+.form__reset-input {
+    width: 100%;
+    font-size: 18px;
+    flex-grow: 2;
+    margin-left: 12px;
+    padding: 8px 0;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #aeaeae;
+}
+
+.form__recover-input:focus, .form__reset-input {
+    transition: 0.3s;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+
+.recover__button {
+    margin: auto;
+    font-size: 16px;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    background: var(--primary-color);
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.avatar {
+    width: 40px;
+}
+
+.email {
+    margin-left: 20px;
+    font-size: 16px;
+    color: var(--gray-text-color);
+}
+
+.form__recover-message {
+    width: 100%;
+    color: rgb(221, 57, 57);
+    text-align: center;
+    font-size: 14px;
+}
