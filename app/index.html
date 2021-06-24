@@ -184,8 +184,8 @@
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
                                     <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                        <li class="post__user__comment-setting-select">Edit</li>
-                                        <li class="post__user__comment-setting-select">Remove</li>
+                                        <li class="post__user__comment-setting-select comment__edit">Edit</li>
+                                        <li class="post__user__comment-setting-select commetn__remove">Remove</li>
                                     </ul>
                                 </span>
                             </div>
@@ -198,11 +198,12 @@
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
                                     <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                        <li class="post__user__comment-setting-select">Edit</li>
-                                        <li class="post__user__comment-setting-select">Remove</li>
+                                        <li class="post__user__comment-setting-select comment__edit">Edit</li>
+                                        <li class="post__user__comment-setting-select commetn__remove">Remove</li>
                                     </ul>
                                 </span>
-                            </div><div class="post__user__comment">
+                            </div>
+                            <div class="post__user__comment">
                                 <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
                                 <div class="post__user__comment-body">
                                     <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
@@ -211,8 +212,8 @@
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
                                     <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                        <li class="post__user__comment-setting-select">Edit</li>
-                                        <li class="post__user__comment-setting-select">Remove</li>
+                                        <li class="post__user__comment-setting-select comment__edit">Edit</li>
+                                        <li class="post__user__comment-setting-select commetn__remove">Remove</li>
                                     </ul>
                                 </span>
                             </div>
@@ -286,8 +287,8 @@
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
                                     <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                        <li class="post__user__comment-setting-select">Edit</li>
-                                        <li class="post__user__comment-setting-select">Remove</li>
+                                        <li class="post__user__comment-setting-select comment__edit">Edit</li>
+                                        <li class="post__user__comment-setting-select commetn__remove">Remove</li>
                                     </ul>
                                 </span>
                             </div>
@@ -300,8 +301,8 @@
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
                                     <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                        <li class="post__user__comment-setting-select">Edit</li>
-                                        <li class="post__user__comment-setting-select">Remove</li>
+                                        <li class="post__user__comment-setting-select comment__edit">Edit</li>
+                                        <li class="post__user__comment-setting-select commetn__remove">Remove</li>
                                     </ul>
                                 </span>
                             </div>
@@ -314,8 +315,8 @@
                                 <span class="post__user__comment-setting">
                                     <i class="fas fa-ellipsis-h"></i>
                                     <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                        <li class="post__user__comment-setting-select">Edit</li>
-                                        <li class="post__user__comment-setting-select">Remove</li>
+                                        <li class="post__user__comment-setting-select comment__edit">Edit</li>
+                                        <li class="post__user__comment-setting-select commetn__remove">Remove</li>
                                     </ul>
                                 </span>
                             </div>
@@ -328,7 +329,18 @@
             </div>
         </div>
     </div>
-    <!-- Modal edit -->
+    <!-- Modal edit comment -->
+    <div class="edit__comment-frame">
+        <div class="modal__overlay">
+            <div style="background-color: #fff; margin: auto; position: relative; border-radius: 5px; width: 60%; margin-top: 25%;">
+                <form action="" method="POST" class="form__edit__comment">
+                    <textarea name="edit__comment" id="edit__comment-input" cols="30" rows="3"></textarea>
+                    <button>Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal edit post -->
     <div class="edit__post-frame">
         <div class="modal__overlay">
             <div class="modal__body" style="width: 540px;">
@@ -402,6 +414,7 @@
         catchEventLog();
         openEditPostModal();
         closeEditPostModal();
+        commentEditModal();
     </script>
 </body>
 </html>

@@ -31,3 +31,19 @@ function closeEditPostModal() {
         document.querySelector('.edit__post-frame').style.display = 'none';
     }
 }
+
+function commentEditModal() {
+    var editModal = document.querySelector('.edit__comment-frame');
+    var openButton = document.querySelectorAll('.comment__edit');
+    var modal_overlay = editModal.querySelector('.modal__overlay');
+    openButton.forEach((item) => {
+        item.onclick = () => {
+            editModal.style.display = 'block';
+        }
+    })
+    window.onclick = (event) => {
+        if (event.target == modal_overlay) {
+            editModal.style.display = 'none';
+        }
+    }
+}

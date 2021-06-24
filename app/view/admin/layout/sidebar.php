@@ -1,3 +1,17 @@
+<?php
+    session_start();
+    include_once '../../lib/session.php';
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'GET' and isset($_GET['action']) and $_GET['action'] == 'logout') {
+        Session::destroy();
+    }
+
+    $isLog = Session::checkSession('root');
+    if (!$isLog) {
+        header('Location:login.php');
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,10 +49,10 @@
                         </span>
                         <ul class="sidebar__tab-list">
                             <li class="sidebar__tab-page">
-                                <a class="sidebar__tab-link tab__page--active" href="">Tổng quan</a>
+                                <a class="sidebar__tab-link tab__page--active" href="index.php">Tổng quan</a>
                             </li>
                             <li class="sidebar__tab-page">
-                                <a class="sidebar__tab-link" href="">Giới thiệu</a>    
+                                <a class="sidebar__tab-link" href="introduction.php">Giới thiệu</a>    
                             </li>
                         </ul>
                     </li>
@@ -49,10 +63,10 @@
                         </span>
                         <ul class="sidebar__tab-list">
                             <li class="sidebar__tab-page">
-                                <a class="sidebar__tab-link" href="">Danh sách</a>
+                                <a class="sidebar__tab-link" href="user-list.php">Danh sách</a>
                             </li>
                             <li class="sidebar__tab-page">
-                                <a class="sidebar__tab-link" href="">Thêm tài khoản</a>    
+                                <a class="sidebar__tab-link" href="user-create.php">Thêm tài khoản</a>    
                             </li>
                         </ul>
                     </li>
@@ -63,10 +77,10 @@
                         </span>
                         <ul class="sidebar__tab-list">
                             <li class="sidebar__tab-page">
-                                <a class="sidebar__tab-link" href="">Danh sách</a>
+                                <a class="sidebar__tab-link" href="post-list.php">Danh sách</a>
                             </li>
                             <li class="sidebar__tab-page">
-                                <a class="sidebar__tab-link" href="">Bị cắm cờ</a>
+                                <a class="sidebar__tab-link" href="post-flag.php">Bị cắm cờ</a>
                             </li>
                             <li class="sidebar__tab-page">
                                 <a class="sidebar__tab-link" href="">Vi phạm</a>
@@ -75,68 +89,3 @@
                     </li>
                 </ul>
             </div>
-            <!-- Right preview -->
-            <div class="preview">
-                <!-- Header -->
-                <div class="header">
-                    <div class="search__field l-4 m-0 c-0">
-                        <span class="search__field__submit">
-                            <i class="fas fa-search"></i>
-                        </span>
-                        <input class="search__field__input" type="text" name="name" placeholder="Tìm kiếm">
-                    </div>
-                    <div class="admin__field">
-                        <span class="admin-username font-rajdhani">Admin</span>
-                        <figure>
-                            <img class="circle-avatar admin-avatar" src="../../assets/img/avatar/186608.jpg" alt="">
-                        </figure>
-                        <ul class="admin__action-list">
-                            <li class="admin__action-item"> 
-                                <a class="admin__action-link font-rajdhani" href="">
-                                    Profile
-                                    <i class="fas fa-cog"></i>
-                                </a>
-                            </li>
-                            <li class="admin__action-item"> 
-                                <a class="admin__action-link font-rajdhani" href="">
-                                    Đổi mật khẩu
-                                    <i class="fas fa-key"></i>
-                                </a>
-                            </li>
-                            <li class="admin__action-item"> 
-                                <a class="admin__action-link font-rajdhani" href="">
-                                    Đăng xuất
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content__wrapper mrg-top-40">
-                    <div class="row no-gutters">
-                        <div class="l-12 m-12 c-12 pad-30 ">
-                            <div class="box pad-30">
-                                <div class="box__heading font-rajdhani">
-                                    Nội dung giới thiệu
-                                </div>
-                                <textarea id="editor"></textarea>
-                                <button id="submit__intro" class="submit-button--smooth mrg-top-40">Cập nhập</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        tinymce.init({
-            selector: '#editor',
-            width: '1000px',
-            height: '500px'
-        });
-        $('#submit__intro').click(() => {
-            console.log(tinyMCE.activeEditor.getContent({format : 'raw'}));
-        })
-    </script>
-</body>
-</html>

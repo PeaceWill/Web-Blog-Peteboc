@@ -1,3 +1,30 @@
+<?php
+    if (session_id() == '') {
+        session_start($_COOKIE['PHPSESSID']);
+    }
+    include_once '../../lib/session.php';
+    $isLog = Session::checkSession('root');
+    if ($isLog) {
+        header('Location: index.php');
+    }
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if (isset($_GET['username']) and isset($_GET['password'])) {
+            include_once '../../config/config.php';
+            include_once '../../lib/database.php';
+            include_once '../../lib/validate.php';
+            include_once '../../model/user.php';
+            $userClass = new User($pdo);
+
+            $adminLog = $userClass->login_admin($_GET['username'], $_GET['password']);
+            if (!$adminLog) {
+                $error = 'Tài khoản không chính xác';
+            } else {
+                Session::set('root', true);
+                header('Location:index.php');
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,14 +44,14 @@
         <form class="form__admin-login box-shadow-6 font-rajdhani" action="" method="GET">
             <div class="form__admin-group">
                 <label for="admin-username">Username</label>
-                <input class="form__admin-input font-rajdhani" type="text" id="admin-username" name="username">
+                <input class="form__admin-input font-rajdhani" type="text" name="username">
             </div>
             <div class="form__admin-group">
                 <label for="admin-password">Password</label>
-                <input class="form__admin-input font-rajdhani" type="password" id="admin-password" name="password">
+                <input class="form__admin-input font-rajdhani" type="password" name="password">
             </div>
             <div class="form__admin-group">
-                <span id="form__message-error"></span>
+                <span id="form__message-error"><?php if(isset($error)) echo $error; ?></span>
             </div>
             <div class="flex-row-center" style="width: 100%;">
                 <button id="admin__login" class="submit-button--smooth">Login</button>

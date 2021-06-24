@@ -896,7 +896,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 /* Edit post */
-.edit__post-frame {
+.edit__post-frame, .edit__comment-frame {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -1033,4 +1033,29 @@ input[type=number]::-webkit-inner-spin-button {
 .post__image {
     width: 100%;
     object-fit: contain;
+}
+
+.form__edit__comment {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+#edit__comment-input {
+    resize: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    outline: none;
+}
+
+.form__edit__comment button {
+    margin-top: 16px;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    background: var(--primary-color);
+    color: var(--white-color);
 }

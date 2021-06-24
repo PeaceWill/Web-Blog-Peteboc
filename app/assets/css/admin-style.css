@@ -278,6 +278,7 @@
 .content__wrapper {
     width: 100% !important;
     padding: 12px;
+    animation: fadeIn ease-in 0.2s;
 }
 
 /* Client recent log */
