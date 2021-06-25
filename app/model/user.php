@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_id() == '') {
+    session_start();
+}
 class UserClass {
     private $connect;
     private $validate;
@@ -47,8 +49,8 @@ class UserClass {
     }
 
     // Lấy số lượng tài khoản
-    public function getAllUser() {
-        $stmt = $this->connect->prepare("SELECT COUNT(*) FROM $this->user_table");
+    public function countAllUser() {
+        $stmt = $this->connect->prepare("SELECT COUNT(*) AS number FROM $this->user_table");
         $stmt->execute();
         $res = $stmt->fetch();
         if ($res) {
@@ -59,10 +61,22 @@ class UserClass {
     }
 
     // Lấy số lượng tài khoản đang online
-    public function getAllUserOnline() {
-        $stmt = $this->connect->prepare("SELECT COUNT(*) FROM $this->user_table WHERE state = 1");
+    public function countUserOnline() {
+        $stmt = $this->connect->prepare("SELECT COUNT(*) AS number FROM $this->user_table WHERE state = 1");
         $stmt->execute();
         $res = $stmt->fetch();
+        if ($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
+
+    // Lấy tất cả tài khoản
+    public function getAllUser() {
+        $stmt = $this->connect->prepare("SELECT * FROM $this->user_table");
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
         if ($res) {
             return $res;
         } else {
@@ -86,7 +100,7 @@ class UserClass {
      * Các hàm INSERT
      */
 
-    // Admin thêm tài khoản
+    // Thêm user bởi admin
     public function insertUserAdmin($user) {
         $username = $user['username'];
         $password = $user['password'];
@@ -105,7 +119,7 @@ class UserClass {
         }
     }
 
-    // User tạo tài khoản
+    // Thêm tài khoản user
     public function inserUser($user) {
         $username = $this->validate->filter($user['username']);
         $password = $this->validate->filter($user['password']);
