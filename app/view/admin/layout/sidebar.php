@@ -27,9 +27,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="https://cdn.tiny.cloud/1/rk7qull7onh332oziqtvr0khav5pwrbs8heqp1pp9twhrl5j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="../../assets/js/chart.js"></script>
+    <script src="../../assets/js/admin.js"></script>
 </head>
 <body>
     <div class="grid">

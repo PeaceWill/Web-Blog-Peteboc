@@ -2,42 +2,26 @@
 if (session_id() == '') {
     session_start();
 }
-class UserClass {
-    private $connect;
-    private $validate;
+require_once 'connection.php';
+require_once '../../config/config.php';
+class User extends Connection 
+{
     private $user_table = USER_TABLE;
     private $user_info_table = USER_INFO_TABLE;
-
-    public function __construct(\PDO $pdo)
+    public function __construct()
     {
-        $this->connect = $pdo;
-        $this->validate = new Validate();
+        parent::__construct();
     }
 
-    /**
-     * Các hàm SELECT
-     */
+    /** 
+     *   SELECT FUNCTION
+    */
 
-    // Kiểm tra đăng nhập admin
-    public function login_admin($username, $password) {
+    // Login admin
+    public function login_admin($username, $password) 
+    {
         $password = hash('sha256', $password);
-
-        $stmt = $this->connect->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password AND level=2");
-        $stmt->execute(['username' => $username, 
-                        'password' => $password]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return $res;
-        } else {
-            return false;
-        }
-    }
-
-    // Kiểm tra đăng nhập
-    public function login($username, $password) {
-        $password = hash('sha256', $password);
-
-        $stmt = $this->connect->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password LIMIT 1");
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password AND level=2");
         $stmt->execute(['username' => $username,
                         'password' => $password]);
         $res = $stmt->fetch();
@@ -48,10 +32,13 @@ class UserClass {
         }
     }
 
-    // Lấy số lượng tài khoản
-    public function countAllUser() {
-        $stmt = $this->connect->prepare("SELECT COUNT(*) AS number FROM $this->user_table");
-        $stmt->execute();
+    // Login user
+    public function login($username, $password)
+    {
+        $password = hash('sha256', $password);
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:uesrname AND password=:password LIMIT 1");
+        $stmt->execute(['username' => $username,
+                        'password' => $password]);
         $res = $stmt->fetch();
         if ($res) {
             return $res;
@@ -60,11 +47,28 @@ class UserClass {
         }
     }
 
-    // Lấy số lượng tài khoản đang online
-    public function countUserOnline() {
-        $stmt = $this->connect->prepare("SELECT COUNT(*) AS number FROM $this->user_table WHERE state = 1");
+    // Count all user 
+    public function countAllUser()
+    {
+        $stmt = $this->link->prepare("SELECT COUNT(*) FROM $this->user_table");
         $stmt->execute();
-        $res = $stmt->fetch();
+        return $stmt->fetch();
+    }
+
+    // Count online user 
+    public function countOnlineUser()
+    {
+        $stmt = $this->link->prepare("SELECT COUNT(*) FROM $this->user_table WHERE state=1");
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    // Select all user 
+    public function getUserAll()
+    {
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_table");
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
             return $res;
         } else {
@@ -72,21 +76,10 @@ class UserClass {
         }
     }
 
-    // Lấy tất cả tài khoản
-    public function getAllUser() {
-        $stmt = $this->connect->prepare("SELECT * FROM $this->user_table");
-        $stmt->execute();
-        $res = $stmt->fetchAll(PDO::FETCH_COLUMN|PDO::FETCH_GROUP);
-        if ($res) {
-            return $res;
-        } else {
-            return false;
-        }
-    }
-
-    // lấy thông tin theo username
-    public function getUserInfo($username) {
-        $stmt = $this->connect->prepare("SELECT* FROM $this->user_info_table WHERE username=:username");
+    // Select user info by username
+    public function getUserByUsername($username)
+    {
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_info_table WHERE username=:username");
         $stmt->execute(['username' => $username]);
         $res = $stmt->fetch();
         if ($res) {
@@ -96,138 +89,104 @@ class UserClass {
         }
     }
 
-    /**
-     * Các hàm INSERT
-     */
+    // Check email existed
+    public function isEmailExisted($email)
+    {
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email");
+        $stmt->execute(['email' => $email]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    // Thêm user bởi admin
-    public function insertUserAdmin($user) {
+
+    /** 
+     *   INSERT FUNCTION
+    */
+
+    // Insert user
+    public function insertUser($user)
+    {
         $username = $user['username'];
-        $password = $user['password'];
+        $password = hash('sha256', $user['password']);
         $level = $user['level'];
-        $password = hash('sha256', $password);
 
-        $stmt = $this->connect->prepare("INSERT INTO $this->user_table (username, password, level) VALUES (:username, :password, :level)");
+        $stmt = $this->link->prepare("INSERT INTO $this->user_table (username, password, level) VALUES (:username, :password, :level)");
         $stmt->execute(['username' => $username,
                         'password' => $password,
                         'level' => $level]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
-    // Thêm tài khoản user
-    public function inserUser($user) {
-        $username = $this->validate->filter($user['username']);
-        $password = $this->validate->filter($user['password']);
-        $password = hash('sha256', $password);
-
-        $stmt = $this->connect->prepare("INSERT INTO $this->user_table (username, password, level) VALUES (:username, :password, 0)");
-        $stmt->execute(['username' => $username,
-                        'password' => $password]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // Thêm user info
-    public function insertUserInfo($username, $data) {
-        $realname = $data['realname'];
-        $email = $data['realname'];
-        $gender = $data['email'];
-        $link = $username;
-        $date_create = date('Y-m-d');
-
-        $stmt = $this->connect->prepare("INSERT INTO $this->user_info_table (username, realname, email, link, date_create)
-                                        VALUES (:username, :realname, :email, :link, :date_create)");
-        $stmt->execute(['username' => $username,
-                        'realname' => $realname,
-                        'email' => $email,
-                        'link' => $link,
-                        'date_create' => $date_create]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Các hàm UPDATE
-     */
-
-    //  Update trạng thái online của user
-    public function updateUserStateOnline($username) {
-        $stmt = $this->connect->prepare("UPDATE $this->user_table SET state=1 WHERE username=:username");
-        $stmt->execute(['username' => $username]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return $res;
-        } else {
-            return false;
-        }
-    }
-
-    // Update trạng thái offline của user
-    public function updateUserStateOffline($username) {
-        $stmt = $this->connect->prepare("UPDATE $this->user_table SET state=0 WHERE username=:username");
-        $stmt->execute(['username' => $username]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return $res;
-        } else {
-            return false;
-        }
-    }
-
-    // Update thông tin user
-    public function updateUserInfo($username, $data) {
-        $realname = $data['realname'];
+    // Insert user info
+    public function insertUserInfo($data)
+    {
+        $username = $data['username'];
         $email = $data['email'];
+        $realname = $data['realname'];
+        $phone = $data['phone'];
+        $address = $data['address'];
+        $gender = $data['gender'];
+        $link = $data['link'];
+        $data_create = date('Y-m-d');
+        $avatar = $data['avatar'];
+        $description = $data['description'];
+
+        $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, date_create, avatar, description)
+                                    VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :date_create, :avatar, :description)");
+        $stmt->execute(['username' => $username,
+                        'email' => $email,
+                        'realname' => $realname,
+                        'phone' => $phone,
+                        'address' => $address,
+                        'gender' => $gender,
+                        'link' => $link,
+                        'date_create' => $data_create,
+                        'avatar' => $avatar,
+                        'description' => $description]);
+    }
+
+    /** 
+     *   UPDATE FUNCTIOM
+    */
+
+    // Update user info
+    public function updateUserInfo($data)
+    {
+        $email = $data['email'];
+        $realname = $data['realname'];
         $phone = $data['phone'];
         $address = $data['address'];
         $gender = $data['gender'];
         $link = $data['link'];
         $avatar = $data['avatar'];
-        $avatar_link = $data['avatar_link'];
-        $desc = $data['desc'];
+        $description = $data['description'];
 
-        $stmt = $this->connect->prepare("UPDATE $this->user_table SET realname=:realname, email=:email, phone=:phone, address=:address, gender=:gender,
-                                        link=:link, avatar=:avatar, description=:description WHERE username=:username");
-        $stmt->execute(['realname' => $realname,
-                        'email' => $email,
+        $stmt = $this->link->prepare("UPDATE $this->user_info_table (email, realname, phone, address, gender, link, avatar, description)
+                                    VALUES (:email, :realname, :phone, :address, :gender, :link, :avatar, :description)");
+        $stmt->execute(['email' => $email,
+                        'realname' => $realname,
                         'phone' => $phone,
                         'address' => $address,
                         'gender' => $gender,
                         'link' => $link,
                         'avatar' => $avatar,
-                        'descriptopn' => $desc,
-                        'username' => $username]);
-        $res = $stmt->fetch();
-        if ($res) {
-            // Lưu ảnh vào file avatar
-            return $res;
+                        'description' => $description]);
+        if ($stmt) {
+            return true;
         } else {
             return false;
         }
     }
 
-    // Update mật khẩu user
-    public function updateUserPassword($username, $new_password)
-    {
-        $stmt = $this->connect->prepare("UPDATE $this->user_info_table SET password=:new_pw WHERE username=:username");
-        $stmt->execute(['new_pw' => $new_password,
+    public function updateUserState($username, $state) {
+        $stmt = $this->link->prepare("UPDATE $this->user_table SET $this->user_table.state=:state WHERE $this->user_table.username=:username");
+        $stmt->execute(['state' => $state,
                         'username' => $username]);
-        $res = $stmt->fetch();
-        if ($res) {
-            return $res;
+        if ($stmt) {
+            return true;
         } else {
             return false;
         }

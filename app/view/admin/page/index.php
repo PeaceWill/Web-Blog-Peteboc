@@ -6,7 +6,7 @@
                                 <div id="user__count" class="stretch__card-heading">
                                     Tài khoản
                                 </div>
-                                <div class="stretch__card-body">
+                                <div id="number__user" class="stretch__card-body">
                                     80
                                 </div>
                             </div>
@@ -16,7 +16,7 @@
                                 <div id="onl__count" class="stretch__card-heading">
                                     Online
                                 </div>
-                                <div class="stretch__card-body">
+                                <div id="number__online" class="stretch__card-body">
                                     3
                                 </div>
                             </div>
@@ -26,7 +26,7 @@
                                 <div id="log__count" class="stretch__card-heading">
                                     Truy cập
                                 </div>
-                                <div class="stretch__card-body">
+                                <div id="number__log" class="stretch__card-body">
                                     50
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                 <div id="post__count" class="stretch__card-heading">
                                     Lượt post
                                 </div>
-                                <div class="stretch__card-body">
+                                <div id="number__post" class="stretch__card-body">
                                     10
                                 </div>
                             </div>
@@ -121,6 +121,7 @@
     </div>
     <script>
         LineChart();
+        createDashboard();
     </script>
 </body>
 </html>
