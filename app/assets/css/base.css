@@ -217,6 +217,10 @@ a {
     margin-top: 12px;
 }
 
+.mrg-right-10 {
+    margin-right: 10px;
+}
+
 .pad-30 {
     padding: 30px;
 }
@@ -321,3 +325,4 @@ a {
     background: var(--primary-color);
     color: var(--white-color);
 }
+

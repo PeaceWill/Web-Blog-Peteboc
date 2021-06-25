@@ -13,7 +13,7 @@
             include_once '../../lib/database.php';
             include_once '../../lib/validate.php';
             include_once '../../model/user.php';
-            $userClass = new User($pdo);
+            $userClass = new UserClass($pdo);
 
             $adminLog = $userClass->login_admin($_GET['username'], $_GET['password']);
             if (!$adminLog) {
