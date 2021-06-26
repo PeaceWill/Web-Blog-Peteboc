@@ -29,20 +29,16 @@ function callAjax(option, callback) {
 }
 
 // Send image
-function sendImage(option, callback) {
-    var fd = new FormData();
-    var avatar = $('#upload-avatar')[0].files[0];
-    fd.append('avatar', avatar);
-    var username = document.querySelector('input[name=username]').value;
+function callAjaxWithImage(option, callback) {
     $.ajax({
-        url: `${option.url}/user.php?username=${username}`,
+        url: option.url,
         type: option.type,
-        data: fd,
+        data: option.data,
         contentType: false,
         processData: false,
-        success: ((data) => {
-            
-        })
+        success: (data) => {
+            callback(data);
+        }
     });
 }
 
@@ -56,19 +52,52 @@ function createUser() {
     button.onclick = (event) => {
         event.preventDefault();
         var link = `${linkApi}/user.php`;
+        var avatar = document.querySelector('#upload-avatar').files[0];
+        var inputData = getFormData($('#form__user-create'));
+        var fd = new FormData();
+        fd.append('avatar', avatar);
+        fd.append('data', JSON.stringify(inputData));
+        fd.append('action', 'create');
         var option = { 
             'url': link,
             'type': 'POST', 
-            'data': $('#form__user-create').serialize()
+            'data': fd
         };
-        callAjax(option, renderCreateUser);
-        sendImage(option, '');
+        callAjaxWithImage(option, renderCreateUser);
+    }
+}
+
+function updateUser() {
+    var button = document.querySelector('#submit__user-info');
+    button.onclick = (event) => {
+        event.preventDefault();
+        var link = `${linkApi}/user.php`;
+        var avatar = document.querySelector('#upload-avatar').files[0];
+        var inputData = getFormData($('#form__user-info'));
+        var fd = new FormData();
+        fd.append('avatar', avatar);
+        fd.append('data', JSON.stringify(inputData));
+        fd.append('action', 'update');
+        var option = {
+            'url': link,
+            'type': 'POST',
+            'data': fd
+        }
+        callAjaxWithImage(option, alertFunc);
     }
 }
 
 function getListUser() {
     var link = `${linkApi}/user.php`;
     callApi(link, 'GET', renderListUser);
+}
+
+function getUserInfo() {
+    var url = window.location.href.split('?');
+    var link = `${linkApi}/user.php?${url[1]}`;
+    $(document).ready(() => {
+        callApi(link, 'GET', renderUserInfo);
+    });
 }
 
 function renderStrectCard(data) {
@@ -92,7 +121,13 @@ function renderStrectCard(data) {
 }
 
 function renderCreateUser(data) {
+    data = JSON.parse(data);
     alert(data.message);
+    var input = document.querySelectorAll('input[class=form__input]');
+    input.forEach((item) => {
+        item.value = '';
+    });
+    document.querySelector('textarea').value = '';
 } 
 
 function renderListUser(data) {
@@ -119,4 +154,39 @@ function renderListUser(data) {
                 </a>`;
     });
     list.innerHTML += html.join('');
+}
+
+function renderUserInfo(data) {
+    document.querySelector('input[name=username]').value = data.username;
+    document.querySelector('input[name=email]').value = data.email;
+    document.querySelector('input[name=realname]').value = data.realname;
+    document.querySelector('input[name=phone]').value = data.phone;
+    document.querySelector('textarea[name=description]').value = data.description;
+    document.querySelector('input[name=link]').value = data.link;
+    document.querySelector('input[name=address]').value = data.address;
+    var genderSelect = document.querySelectorAll('input[name=gender]');
+    genderSelect.forEach((item) => {
+        if (item.value == data.gender) {
+            item.setAttribute('checked', true);
+        }
+    })
+    document.querySelector('select').options.selectedIndex = data.level;
+    document.querySelector('.circle-avatar.form__info-avatar').src = `../../assets/img/avatar/${data.avatar}`;
+}
+
+function getFormData(selector){
+    var unindexed_array = selector.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+
+function alertFunc(data) {
+    data = JSON.parse(data);
+    alert(data.message);
+    window.location.reload(true);
 }

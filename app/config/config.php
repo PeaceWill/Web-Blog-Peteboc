@@ -11,6 +11,6 @@ define('USER_INFO_TABLE', 'user_info');
 define('POST_TABLE', 'post');
 define('SHARE_TABLE', 'share');
 define('COMMENT_TABLE', 'comment');
-define('INTRO_TABLE', 'introduction');
+define('ABOUT_TABLE', 'about');
 define('LOG_TABLE', 'log')
 ?>

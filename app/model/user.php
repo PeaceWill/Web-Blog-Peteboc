@@ -87,7 +87,12 @@ class User extends Connection
     // Select user info by username
     public function getUserByUsername($username)
     {
-        $stmt = $this->link->prepare("SELECT * FROM $this->user_info_table WHERE username=:username");
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.username, $this->user_info_table.realname, $this->user_info_table.email,
+                                    $this->user_info_table.phone, $this->user_info_table.address, $this->user_info_table.gender, 
+                                    $this->user_info_table.link, $this->user_info_table.date_create, $this->user_info_table.avatar,
+                                    $this->user_info_table.description, $this->user_table.level FROM $this->user_info_table INNER JOIN $this->user_table 
+                                    ON $this->user_info_table.username=$this->user_table.username 
+                                    WHERE $this->user_info_table.username=:username");
         $stmt->execute(['username' => $username]);
         $res = $stmt->fetch();
         if ($res) {
@@ -97,11 +102,24 @@ class User extends Connection
         }
     }
 
+    // Check username is existed
+    public function isUsernameExisted($username) {
+        $stmt = $this->link->prepare("SELECT $this->user_table.username FROM $this->user_table WHERE username=:username");
+        $stmt->execute(['username' => $username]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Check email existed
-    public function isEmailExisted($email)
+    public function isEmailExisted($username, $email)
     {
-        $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email");
-        $stmt->execute(['email' => $email]);
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email AND username<>:username");
+        $stmt->execute(['email' => $email,
+                        'username' => $username]);
         $res = $stmt->fetch();
         if ($res) {
             return true;
@@ -137,7 +155,7 @@ class User extends Connection
         $phone = $data['phone'];
         $address = $data['address'];
         $gender = $data['gender'];
-        $link = $data['link'];
+        $link = $data['username'];
         $data_create = date('Y-m-d');
         $description = $data['description'];
 
@@ -162,25 +180,25 @@ class User extends Connection
     // Update user info
     public function updateUserInfo($data)
     {
+        $username = $data['username'];
         $email = $data['email'];
         $realname = $data['realname'];
         $phone = $data['phone'];
         $address = $data['address'];
         $gender = $data['gender'];
-        $link = $data['link'];
-        $avatar = $data['avatar'];
+        $link = $data['username'];
         $description = $data['description'];
 
-        $stmt = $this->link->prepare("UPDATE $this->user_info_table (email, realname, phone, address, gender, link, avatar, description)
-                                    VALUES (:email, :realname, :phone, :address, :gender, :link, :avatar, :description)");
+        $stmt = $this->link->prepare("UPDATE $this->user_info_table SET email=:email, realname=:realname, phone=:phone, address=:address, gender=:gender, link=:link, description=:description 
+                                    WHERE username=:username");
         $stmt->execute(['email' => $email,
                         'realname' => $realname,
                         'phone' => $phone,
                         'address' => $address,
                         'gender' => $gender,
                         'link' => $link,
-                        'avatar' => $avatar,
-                        'description' => $description]);
+                        'description' => $description,
+                        'username' => $username]);
         if ($stmt) {
             return true;
         } else {
@@ -201,26 +219,19 @@ class User extends Connection
 
     public function updateAvatar($username, $avatar)
     {
-        $image = $username.'.jpg';
+        $type = pathinfo($avatar['name'], PATHINFO_EXTENSION);
+        $image = $username.'.'.$type;
         $image_save = $avatar['tmp_name'];
-
-        $imageType = pathinfo($image, PATHINFO_EXTENSION);
-        $valid_type = array('jpg', 'png', 'jpeg');
-        
-        if (!in_array(strtolower($imageType), $valid_type)) {
-            return false;
-        } else {
-            $stmt = $this->link->prepare("UPDATE $this->user_info_table SET avatar=:avatar WHERE username=:username");
-            $stmt->execute(['avatar' => $image,
-                            'username' => $username]);
     
-            if ($image_save != '') {
-                $targetFile = basename($image);
-                move_uploaded_file($image_save, '../../assets/img/avatar/'.$targetFile);
-            }
-            return true;
-        }
+        $stmt = $this->link->prepare("UPDATE $this->user_info_table SET avatar=:avatar WHERE username=:username");
+        $stmt->execute(['avatar' => $image,
+                        'username' => $username]);
 
+        if ($image_save != '') {
+            $targetFile = basename($image);
+            move_uploaded_file($image_save, '../../assets/img/avatar/'.$targetFile);
+        }
+        return true;
     }
 }
 ?>

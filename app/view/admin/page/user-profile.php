@@ -8,12 +8,12 @@
                                 <form id="form__user-info" class="form__info" method="POST" action="">
                                     <div class="form__group">
                                         <label class="form__label">Tên tài khoản</label>
-                                        <input class="form__input" readonly type="text" name="username">
+                                        <input class="form__input" readonly type="text" name="username" value="">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Avatar</label>
                                         <div class="form__avatar-upload">
-                                            <img class="circle-avatar form__info-avatar" src="../../assets/img/avatar/186608.jpg" alt="">
+                                            <img class="circle-avatar form__info-avatar" src="" alt="">
                                             <div class="button__wrap">
                                                 <label class="button__upload-avatar" for="upload-avatar">Upload file</label>
                                                 <input type="file" id="upload-avatar" name="avatar">
@@ -22,33 +22,33 @@
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Họ tên</label>
-                                        <input class="form__input" type="text" name="realname">
+                                        <input class="form__input" type="text" name="realname" value="">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Email</label>
-                                        <input class="form__input" type="email" name="email">
+                                        <input class="form__input" type="email" name="email" value=""">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Số điện thoại</label>
-                                        <input class="form__input" type="number" name="phone">
+                                        <input class="form__input" type="number" name="phone" value="">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Địa chỉ</label>
-                                        <input class="form__input" type="text" name="address">
+                                        <input class="form__input" type="text" name="address" value="">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Giới tính</label>
                                         <div class="form__gender__selection">
                                             <div class="gender__selection-group">
-                                                <input id="male-gender" class="form__input" type="radio" name="gender" value="male">
+                                                <input id="male-gender" class="form__input" type="radio" name="gender" value="1">
                                                 <label for="male-gender">Nam</label>
                                             </div>
                                             <div class="gender__selection-group">
-                                                <input id="female-gender" class="form__input" type="radio" name="gender" value="female">
+                                                <input id="female-gender" class="form__input" type="radio" name="gender" value="0">
                                                 <label for="female-gender">Nữ</label>
                                             </div>
                                             <div class="gender__selection-group">
-                                                <input id="other-gender" class="form__input" type="radio" name="gender" value="other">
+                                                <input id="other-gender" class="form__input" type="radio" name="gender" value="-1">
                                                 <label for="other-gender">Khác</label>
                                             </div>
                                         </div>
@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Link</label>
-                                        <input class="form__input" type="text" name="link">
+                                        <input class="form__input" type="text" name="link" value="">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Level</label>
@@ -69,6 +69,7 @@
                                             <option value="2">Admin</option>
                                         </select>
                                     </div>
+                                    <input type="hidden" name="action" value="update">
                                     <button id="submit__user-info" class="submit-button--smooth mrg-top-40">Cập nhập</button>
                                 </form>
                             </div>
@@ -140,7 +141,9 @@
         </div>
     </div>
     <script>
+        getUserInfo();
         LineChart();
+        updateUser();
     </script>
 </body>
 </html>

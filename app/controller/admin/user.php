@@ -26,26 +26,26 @@ if (Session::checkSession('root')) {
             break;
         case 'POST':
             if (isset($_POST['action']) and $_POST['action'] == 'create') {
-                $user = array(
-                    'username' => isset($_POST['username']) ? $_POST['username'] : '',
-                    'password' => isset($_POST['password']) ? $_POST['password'] : '',
-                    'level' => isset($_POST['level']) ? $_POST['level'] : '',
-                    'email' => isset($_POST['email']) ? $_POST['email'] : '',
-                    'realname' => isset($_POST['realname']) ? $_POST['realname'] : '',
-                    'phone' => isset($_POST['phone']) ? $_POST['phone'] : '',
-                    'address' => isset($_POST['address']) ? $_POST['address'] : '',
-                    'gender' => isset($_POST['gender']) ? $_POST['gender'] : '',
-                    'link' => isset($_POST['link']) ? $_POST['link'] : '',
-                    'description' => isset($_POST['description']) ? $_POST['description'] : '', 
-                );
-                $res = createUser($user);
+                // Insert User
+                $receive = json_decode($_POST['data']);
+                $data = array();
+                foreach($receive as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $data['avatar'] = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : 'default.png';
+                $data['avatar_save'] = isset($_FILES['avatar']['tmp_name']) ? $_FILES['avatar']['tmp_name'] : null;
+                $res = createUser($data);
                 echo json_encode($res);
-            } else if (isset($_FILES['avatar']) and isset($_GET['username'])) {
-                $avatar = array(
-                    'name' => $_FILES['avatar']['name'],
-                    'tmp_name' => $_FILES['avatar']['tmp_name']
-                );
-                $res = $userClass->updateAvatar($_GET['username'], $avatar);
+            } else if (isset($_POST['action']) and $_POST['action'] == 'update') {
+                // Update User
+                $receive = json_decode($_POST['data']);
+                $data = array();
+                foreach($receive as $key => $value) {
+                    $data[$key] = $value;
+                }
+                $data['avatar'] = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : 'default.png';
+                $data['avatar_save'] = isset($_FILES['avatar']['tmp_name']) ? $_FILES['avatar']['tmp_name'] : null;
+                $res = updateUser($data);
                 echo json_encode($res);
             }
             break;
@@ -54,7 +54,8 @@ if (Session::checkSession('root')) {
     echo 'Bạn cần đăng nhập admin để truy cập thông tin này <3';
 }
 
-function createUser($user) {
+function createUser($user) 
+{
     include_once '../../model/user.php';
     $userClass = new User();
     if (empty($user['username'])) {
@@ -88,28 +89,94 @@ function createUser($user) {
         );
         return $response;
     } else {
-        if ($userClass->getUserByUsername($user['username'])) {
+        if ($userClass->isUsernameExisted($user['username'])) {
             $response = array(
                 'status' => 0,
                 'message' => 'Tài khoản đã tồn tại'
             );
             return $response;
-        } else if ($userClass->isEmailExisted($user['email'])) {
+        } else if ($userClass->isEmailExisted($user['username'], $user['email'])) {
             $response = array(
                 'status' => 0,
                 'message' => 'Email đã tồn tại'
             );
             return $response;
         } else {
-            $userClass->insertUser($user);
-            $userClass->insertUserInfo($user);
-            $response = array(
-                'status' => 1,
-                'message' => 'Thêm tài khoản thành công'
+            $image = array(
+                'name' => $user['avatar'],
+                'tmp_name' => $user['avatar_save']
             );
-            return $response;
+
+            $imageType = pathinfo($image['name'], PATHINFO_EXTENSION);
+            $valid_type = array('jpg', 'png', 'jpeg');
+            if (!in_array(strtolower($imageType), $valid_type)) {
+                $response = array(
+                    'status' => 0,
+                    'message' => 'File upload không hợp lệ'
+                );
+                return $response;
+            } else {
+                $userClass->insertUser($user);
+                $userClass->insertUserInfo($user);
+                $userClass->updateAvatar($user['username'], $image);
+                $response = array(
+                    'status' => 1,
+                    'message' => 'Thêm tài khoản thành công'
+                );
+                return $response;
+            }
         }
     }
+}
+
+function updateUser($user)
+{
+    include_once '../../model/user.php';
+    $userClass = new User();
+    if (empty($user['username'])) {
+        $response = array(
+            'status' => 0,
+            'message' => 'Vui lòng sử dụng 1 tài khoản'
+        );
+    } else if (empty($user['realname'])) {
+        $response = array(
+            'status' => 0,
+            'message' => 'Vui lòng nhập họ tên'
+        );
+    } else if (empty($user['email'])) {
+        $response = array(
+            'status' => 0,
+            'message' => 'Vui lòng email'
+        );
+    } else if ($userClass->isEmailExisted($user['username'], $user['email'])) {
+        $response = array(
+            'status' => 0,
+            'message' => 'Email đã tồn tại'
+        );
+    } else {
+        $image = array(
+                'name' => $user['avatar'],
+                'tmp_name' => $user['avatar_save']
+            );
+
+        $imageType = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $valid_type = array('jpg', 'png', 'jpeg');
+        if (!in_array(strtolower($imageType), $valid_type)) {
+            $response = array(
+                'status' => 0,
+                'message' => 'File upload không hợp lệ'
+            );
+            return $response;
+        } else {
+            $userClass->updateUserInfo($user);
+            $userClass->updateAvatar($user['username'], $image);
+            $response = array(
+                'status' => 1,
+                'message' => 'Cập nhập thành công'
+            );
+        }
+    }
+    return $response;
 }
 
 ?>
