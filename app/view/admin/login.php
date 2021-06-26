@@ -13,10 +13,11 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
             if (empty($username) or empty($password)) {
-                $error = 'Vui lòng nhập Username và Password';
+                $error = 'Vui lòng nhập tài khoản và mật khẩu';
             } else {
                 $res = $userClass->login_admin($_POST['username'], $_POST['password']);
                 if ($res) {
+                    $userClass->updateUserState($res['username'], 1);
                     Session::set('root', $res['username']);
                     header('location: index.php');
                 } else {

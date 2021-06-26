@@ -50,7 +50,7 @@ class User extends Connection
     // Count all user 
     public function countAllUser()
     {
-        $stmt = $this->link->prepare("SELECT COUNT(*) FROM $this->user_table");
+        $stmt = $this->link->prepare("SELECT COUNT(*) AS number FROM $this->user_table");
         $stmt->execute();
         return $stmt->fetch();
     }
@@ -58,15 +58,23 @@ class User extends Connection
     // Count online user 
     public function countOnlineUser()
     {
-        $stmt = $this->link->prepare("SELECT COUNT(*) FROM $this->user_table WHERE state=1");
+        $stmt = $this->link->prepare("SELECT COUNT(*) AS number FROM $this->user_table WHERE state=1");
         $stmt->execute();
         return $stmt->fetch();
     }
 
-    // Select all user 
+    // Count user create in week 
+    public function countUserCreateWeek()
+    {
+        $stmt = $this->link->prepare("SELECT COUNT(*) AS number FROm $this->user_info_table WHERE WEEK(date_create)=WEEK(:current_date)");
+        $stmt->execute(['current_date' => date('Y-m-d')]);
+        return $stmt->fetch();
+    }
+
+    // Select all user info
     public function getUserAll()
     {
-        $stmt = $this->link->prepare("SELECT * FROM $this->user_table");
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_info_table");
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
@@ -131,11 +139,10 @@ class User extends Connection
         $gender = $data['gender'];
         $link = $data['link'];
         $data_create = date('Y-m-d');
-        $avatar = $data['avatar'];
         $description = $data['description'];
 
-        $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, date_create, avatar, description)
-                                    VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :date_create, :avatar, :description)");
+        $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, date_create, description)
+                                    VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :date_create, :description)");
         $stmt->execute(['username' => $username,
                         'email' => $email,
                         'realname' => $realname,
@@ -144,9 +151,9 @@ class User extends Connection
                         'gender' => $gender,
                         'link' => $link,
                         'date_create' => $data_create,
-                        'avatar' => $avatar,
                         'description' => $description]);
     }
+
 
     /** 
      *   UPDATE FUNCTIOM
@@ -190,6 +197,30 @@ class User extends Connection
         } else {
             return false;
         }
+    }
+
+    public function updateAvatar($username, $avatar)
+    {
+        $image = $username.'.jpg';
+        $image_save = $avatar['tmp_name'];
+
+        $imageType = pathinfo($image, PATHINFO_EXTENSION);
+        $valid_type = array('jpg', 'png', 'jpeg');
+        
+        if (!in_array(strtolower($imageType), $valid_type)) {
+            return false;
+        } else {
+            $stmt = $this->link->prepare("UPDATE $this->user_info_table SET avatar=:avatar WHERE username=:username");
+            $stmt->execute(['avatar' => $image,
+                            'username' => $username]);
+    
+            if ($image_save != '') {
+                $targetFile = basename($image);
+                move_uploaded_file($image_save, '../../assets/img/avatar/'.$targetFile);
+            }
+            return true;
+        }
+
     }
 }
 ?>

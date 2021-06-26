@@ -5,7 +5,7 @@
                                 <div class="box__heading font-28">
                                     Tạo tài khoản
                                 </div>
-                                <form id="form__user-create" class="form__info" method="POST" action="">
+                                <form id="form__user-create" class="form__info" method="POST" action="" enctype="multipart/form-data">
                                     <div class="form__group">
                                         <label class="form__label">Tên tài khoản</label>
                                         <input class="form__input" required type="text" name="username">
@@ -27,6 +27,10 @@
                                     <div class="form__group">
                                         <label class="form__label">Email</label>
                                         <input class="form__input" required type="email" name="email">
+                                    </div>
+                                    <div class="form__group">
+                                        <label class="form__label">Mật khẩu</label>
+                                        <input class="form__input" required type="password" name="password">
                                     </div>
                                     <div class="form__group">
                                         <label class="form__label">Số điện thoại</label>

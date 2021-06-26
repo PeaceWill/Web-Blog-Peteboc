@@ -3,6 +3,9 @@
     include_once '../../lib/session.php';
     
     if ($_SERVER['REQUEST_METHOD'] == 'GET' and isset($_GET['action']) and $_GET['action'] == 'logout') {
+        include '../../model/user.php';
+        $userClass = new User();
+        $userClass->updateUserState(Session::get('root'), 0);
         Session::destroy();
     }
 

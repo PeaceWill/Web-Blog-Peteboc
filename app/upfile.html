@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <input type="file" name="avatar" id="file">
+        <input type="text" name="username">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        $(document).ready(() => {
+            $('button').click((event) => {
+                event.preventDefault();
+                var fd = new FormData();
+                var avatar = $('#file')[0].files[0];
+                fd.append('avatar', avatar);
+
+                $.ajax({
+                    url: 'upload.php',
+                    type: 'POST',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        console.log(data);
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>
