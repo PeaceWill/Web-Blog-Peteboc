@@ -928,13 +928,14 @@ input[type=number]::-webkit-inner-spin-button {
     position: relative;
 }
 
-#close__edit {
+.close__edit {
     position: absolute;
     right: 20px;
     padding: 5px 10px;
     background: #d6d8df;
     border-radius: 20px;
     color: var(--gray-text-color);
+    cursor: pointer;
 }
 
 .form__edit-body {

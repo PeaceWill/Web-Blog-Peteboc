@@ -334,6 +334,12 @@
         <div class="modal__overlay">
             <div style="background-color: #fff; margin: auto; position: relative; border-radius: 5px; width: 60%; margin-top: 25%;">
                 <form action="" method="POST" class="form__edit__comment">
+                    <div class="form__edit-heading font-rajdhani">
+                        Edit comment
+                        <span id="close__edit-comment" class="close__edit">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </div>
                     <textarea name="edit__comment" id="edit__comment-input" cols="30" rows="3"></textarea>
                     <button>Save</button>
                 </form>
@@ -347,7 +353,7 @@
                 <form class="form__edit__post" action="" method="POST">
                     <div class="form__edit-heading font-rajdhani">
                         Edit post
-                        <span id="close__edit">
+                        <span id="close__edit-post" class="close__edit">
                             <i class="fas fa-times"></i>
                         </span>
                     </div>
@@ -411,10 +417,11 @@
     </footer>
     
     <script>
-        catchEventLog();
         openEditPostModal();
         closeEditPostModal();
-        commentEditModal();
+        openEditCommentModal();
+        closeEditCommentModal();
+        catchEventLog();
     </script>
 </body>
 </html>

@@ -21,9 +21,7 @@
             width: '1000px',
             height: '500px'
         });
-        $('#submit__intro').click(() => {
-            console.log(tinyMCE.activeEditor.getContent({format : 'raw'}));
-        })
+        updateIntroduction();
     </script>
 </body>
 </html>

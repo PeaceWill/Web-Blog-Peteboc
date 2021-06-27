@@ -22,8 +22,10 @@ function callAjax(option, callback) {
         url: option.url,
         type: option.type,
         data: option.data,
+        contentType: false,
+        processData: false,
         success: ((data) => {
-            callback(JSON.parse(data));
+            callback(data);
         })
     });
 }
@@ -84,6 +86,23 @@ function updateUser() {
             'data': fd
         }
         callAjaxWithImage(option, alertFunc);
+    }
+}
+
+function updateIntroduction() {
+    var button = document.querySelector('#submit__intro');
+    button.onclick = (event) => {
+        event.preventDefault();
+        var link = `${linkApi}/about.php`;
+        var myContent = (tinyMCE.activeEditor.getContent()); 
+        var fd = new FormData();
+        fd.append('content', myContent);
+        var option = {
+            'url': link,
+            'type': 'POST',
+            'data': fd
+        }
+        callAjax(option, ((data) => {console.log(data)}));
     }
 }
 
@@ -188,5 +207,5 @@ function getFormData(selector){
 function alertFunc(data) {
     data = JSON.parse(data);
     alert(data.message);
-    window.location.reload(true);
+    window.location.reload();
 }

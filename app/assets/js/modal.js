@@ -19,31 +19,35 @@ function catchEventLog() {
 }
 
 function openEditPostModal() {
-    var openButton = document.querySelector('#post__setting-edit');
-    openButton.onclick = () => {
-        document.querySelector('.edit__post-frame').style.display = 'block';
-    }
+    var openButton = document.querySelectorAll('#post__setting-edit');
+    openButton.forEach((item) => {
+        item.onclick = () => {
+            document.querySelector('.edit__post-frame').style.display = 'block';
+        }
+    });
 }
 
 function closeEditPostModal() {
-    var closeButton = document.querySelector('#close__edit');
+    var closeButton = document.querySelector('#close__edit-post');
     closeButton.onclick = () => {
         document.querySelector('.edit__post-frame').style.display = 'none';
     }
 }
 
-function commentEditModal() {
+function openEditCommentModal() {
     var editModal = document.querySelector('.edit__comment-frame');
     var openButton = document.querySelectorAll('.comment__edit');
-    var modal_overlay = editModal.querySelector('.modal__overlay');
     openButton.forEach((item) => {
         item.onclick = () => {
             editModal.style.display = 'block';
         }
-    })
-    window.onclick = (event) => {
-        if (event.target == modal_overlay) {
-            editModal.style.display = 'none';
-        }
+    });
+}
+
+function closeEditCommentModal() {
+    var closeButton = document.querySelector('#close__edit-comment');
+    closeButton.onclick = () => {
+        console.log('close');
+        document.querySelector('.edit__comment-frame').style.display = 'none';
     }
 }

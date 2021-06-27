@@ -223,14 +223,17 @@ class User extends Connection
         $image = $username.'.'.$type;
         $image_save = $avatar['tmp_name'];
     
-        $stmt = $this->link->prepare("UPDATE $this->user_info_table SET avatar=:avatar WHERE username=:username");
-        $stmt->execute(['avatar' => $image,
-                        'username' => $username]);
-
         if ($image_save != '') {
-            $targetFile = basename($image);
-            move_uploaded_file($image_save, '../../assets/img/avatar/'.$targetFile);
+            $stmt = $this->link->prepare("UPDATE $this->user_info_table SET avatar=:avatar WHERE username=:username");
+            $stmt->execute(['avatar' => $image,
+                            'username' => $username]);
+    
+            if ($image_save != '') {
+                $targetFile = basename($image);
+                move_uploaded_file($image_save, '../../assets/img/avatar/'.$targetFile);
+            }
         }
+
         return true;
     }
 }

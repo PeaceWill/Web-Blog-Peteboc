@@ -1,6 +1,6 @@
 <?php
 if (session_id() == '') {
-	session_start()
+	session_start();
 }
 
 require_once 'connection.php';
@@ -36,7 +36,7 @@ class About extends Connection
 
 	public function updateAboutContent($content)
 	{
-		$stmt= = $this->link->prepare("UPDATE $this->about_table SET conetnt=:content");
+		$stmt = $this->link->prepare("UPDATE $this->about_table SET content=:content");
 		$stmt->execute(['content' => $content]);
 		if ($stmt) {
 			return true;

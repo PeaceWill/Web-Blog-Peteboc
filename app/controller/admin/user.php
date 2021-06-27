@@ -32,7 +32,7 @@ if (Session::checkSession('root')) {
                 foreach($receive as $key => $value) {
                     $data[$key] = $value;
                 }
-                $data['avatar'] = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : 'default.png';
+                $data['avatar'] = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : '';
                 $data['avatar_save'] = isset($_FILES['avatar']['tmp_name']) ? $_FILES['avatar']['tmp_name'] : null;
                 $res = createUser($data);
                 echo json_encode($res);
@@ -43,7 +43,7 @@ if (Session::checkSession('root')) {
                 foreach($receive as $key => $value) {
                     $data[$key] = $value;
                 }
-                $data['avatar'] = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : 'default.png';
+                $data['avatar'] = isset($_FILES['avatar']['name']) ? $_FILES['avatar']['name'] : '';
                 $data['avatar_save'] = isset($_FILES['avatar']['tmp_name']) ? $_FILES['avatar']['tmp_name'] : null;
                 $res = updateUser($data);
                 echo json_encode($res);
@@ -109,7 +109,7 @@ function createUser($user)
 
             $imageType = pathinfo($image['name'], PATHINFO_EXTENSION);
             $valid_type = array('jpg', 'png', 'jpeg');
-            if (!in_array(strtolower($imageType), $valid_type)) {
+            if (!in_array(strtolower($imageType), $valid_type) ) {
                 $response = array(
                     'status' => 0,
                     'message' => 'File upload không hợp lệ'
@@ -161,7 +161,7 @@ function updateUser($user)
 
         $imageType = pathinfo($image['name'], PATHINFO_EXTENSION);
         $valid_type = array('jpg', 'png', 'jpeg');
-        if (!in_array(strtolower($imageType), $valid_type)) {
+        if (!in_array(strtolower($imageType), $valid_type) and $image['tmp_name'] != '') {
             $response = array(
                 'status' => 0,
                 'message' => 'File upload không hợp lệ'
