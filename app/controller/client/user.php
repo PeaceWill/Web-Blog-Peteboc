@@ -1,5 +1,6 @@
 <?php
 include_once '../../lib/session.php';
+include_once '../../lib/token.php';
 Session::init();
 
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -9,10 +10,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $username = isset($_GET['username']) ? $_GET['username'] : '';
             $password = isset($_GET['password']) ? $_GET['password'] : '';
             $res = login($username, $password);
+            if ($res['status'] == 1) {
+                $res['token'] = Token::generateToken();
+            }
             echo json_encode($res);
         } else if (isset($_GET['action']) and $_GET['action'] == 'logout') {
             // Log out
             logout();
+        } else if (isset($_GET['token'])) {
+            $res = auth($_GET['token']);
+            echo json_encode($res);
         }
         else {
             // Get user info
@@ -51,6 +58,18 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     default:
         break;
+}
+
+/** 
+ *  AUTHENTICATION TOKEN
+*/
+function auth($token) {
+    include_once '../../lib/token.php';
+    if (Token::authToken($token)) {
+        return 'true';
+    } else {
+        return 'false';
+    }
 }
 
 /** 
