@@ -1,9 +1,9 @@
 <?php
-include '../lib/session.php'; // fix to call file
+include '../../lib/session.php'; // fix to call file
 Session::init();
 
 require_once 'connection.php';
-require_once '../config/config.php';
+require_once '../../config/config.php';
 class Post extends Connection
 {
     private $post_table = POST_TABLE;

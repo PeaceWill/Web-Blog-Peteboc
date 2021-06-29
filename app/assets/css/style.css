@@ -1111,3 +1111,25 @@ input[type=number]::-webkit-inner-spin-button {
     font-size: 14px;
     color: crimson;
 }
+
+.button__upload-image {
+    padding: 12px 56px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.button__upload-image:hover {
+    background-color: var(--blue-white-color);
+}
+
+.post__textarea {
+    resize: none;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background: var(--blue-white-color);
+    outline: none;
+    padding: 12px;
+    font-size: 18px;
+}

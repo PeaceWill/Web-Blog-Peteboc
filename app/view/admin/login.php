@@ -1,6 +1,6 @@
 <?php
     if (session_id() == '') {
-        session_start($_COOKIE['PHPSESSID']);
+        session_start();
     }
     include_once '../../lib/session.php';
     $isLog = Session::checkSession('root');

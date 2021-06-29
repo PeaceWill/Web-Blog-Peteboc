@@ -124,23 +124,25 @@
                                 <div class="post__heading">
                                     <div class="flex-col pad-left-12 flex-growth-2">
                                         <span class="font-verdana--geneva post__owner">Hưng Nguyễn</span>
-                                        <div style="display: flex;">
-                                            <span class="post__mode">
-                                                <i class="fas fa-unlock-alt"></i>
-                                            </span>
-                                        </div>
+                                        <span class="edit__mode">
+                                            <i id="mode-selected" class="fas fa-unlock-alt"></i>
+                                            <ul class="mode-list box-shadow-6 font-rajdhani">
+                                                <li id="mode-private" class="mode-select">Private</li>
+                                                <li id="mode-public" class="mode-select">Public</li>
+                                            </ul>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="post__content">
-                                    <textarea name="content" class="" cols="30" rows="2"></textarea>
+                                    <textarea class="post__textarea" name="content" class="" cols="30" rows="8" placeholder="Bạn muốn đăng gì ..."></textarea>
                                 </div>
                             </div>
                             <div class="post__box-image">
-                                <img src="../../assets/img/post/pixel-slide1.jpg" alt="">
+                                <img src="" alt="">
                             </div>
-                            <div class="post__footer">
-                                <label for="upload__image-post">Upload image</label>
-                                <input type="file" id="upload__image-post">
+                            <div class="post__footer" style="justify-content: center;">
+                                <label class="button__upload-image" for="upload__image-post">Upload image</label>
+                                <input type="file" id="upload__image-post" style="display: none;">
                             </div>
                         </div>
                        </div>
@@ -149,5 +151,8 @@
            </div>
        </div>
    </div>
+   <script>
+       selectMode();
+   </script>
 </body>
 </html>

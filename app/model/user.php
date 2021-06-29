@@ -1,7 +1,7 @@
 <?php
-if (session_id() == '') {
-    session_start();
-}
+include_once '../../lib/session.php'; // fix to call file
+Session::init();
+
 require_once 'connection.php';
 require_once '../../config/config.php';
 class User extends Connection 
@@ -36,7 +36,7 @@ class User extends Connection
     public function login($username, $password)
     {
         $password = hash('sha256', $password);
-        $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:uesrname AND password=:password LIMIT 1");
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password AND level<>2 LIMIT 1");
         $stmt->execute(['username' => $username,
                         'password' => $password]);
         $res = $stmt->fetch();
@@ -74,7 +74,7 @@ class User extends Connection
     // Select all user info
     public function getUserAll()
     {
-        $stmt = $this->link->prepare("SELECT * FROM $this->user_info_table");
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_info_table ORDER BY date_create DESC");
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
@@ -128,6 +128,18 @@ class User extends Connection
         }
     }
 
+    // Check user account is used
+    public function isOnline($username)
+    {
+        $stmt = $this->link->prepare("SELECT $this->user_table.username FROM $this->user_table WHERE username=:username AND state=1");
+        $stmt->execute(['username' => $username]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    } 
 
     /** 
      *   INSERT FUNCTION
@@ -152,12 +164,12 @@ class User extends Connection
         $username = $data['username'];
         $email = $data['email'];
         $realname = $data['realname'];
-        $phone = $data['phone'];
-        $address = $data['address'];
+        $phone = isset($data['phone']) ? $data['phone'] : '';
+        $address = isset($data['address']) ? $data['address'] : '';
         $gender = $data['gender'];
         $link = $data['username'];
         $data_create = date('Y-m-d');
-        $description = $data['description'];
+        $description = isset($data['description']) ? $data['description'] : '';
 
         $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, date_create, description)
                                     VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :date_create, :description)");
@@ -183,11 +195,11 @@ class User extends Connection
         $username = $data['username'];
         $email = $data['email'];
         $realname = $data['realname'];
-        $phone = $data['phone'];
-        $address = $data['address'];
+        $phone = isset($data['phone']) ? $data['phone'] : '';
+        $address = isset($data['address']) ? $data['address'] : '';
         $gender = $data['gender'];
         $link = $data['username'];
-        $description = $data['description'];
+        $description = isset($data['description']) ? $data['description'] : '';
 
         $stmt = $this->link->prepare("UPDATE $this->user_info_table SET email=:email, realname=:realname, phone=:phone, address=:address, gender=:gender, link=:link, description=:description 
                                     WHERE username=:username");

@@ -25,6 +25,20 @@ function openEditPostModal() {
             document.querySelector('.edit__post-frame').style.display = 'block';
         }
     });
+
+    var modeSelected = document.querySelector('#mode-selected');
+    var modePrivate = document.querySelector('#mode-private');
+    var modepublic = document.querySelector('#mode-public');
+    var modeSelect = document.querySelectorAll('.mode-select');
+    modeSelect.forEach((mode) => {
+        mode.onclick = (event) => { 
+            if (event.target == modePrivate) {
+                modeSelected.classList.replace('fa-users', 'fa-unlock-alt');
+            } else if (event.target == modepublic) {
+                modeSelected.classList.replace('fa-unlock-alt', 'fa-users');
+            }
+         }
+    });
 }
 
 function closeEditPostModal() {
@@ -50,4 +64,20 @@ function closeEditCommentModal() {
         console.log('close');
         document.querySelector('.edit__comment-frame').style.display = 'none';
     }
+}
+
+function selectMode() {
+    var modeSelected = document.querySelector('#mode-selected');
+    var modePrivate = document.querySelector('#mode-private');
+    var modePublic = document.querySelector('#mode-public');
+    var selections = document.querySelectorAll('.mode-select');
+    selections.forEach((select) => {
+        select.onclick = (mode) => {
+            if (mode.target == modePrivate) {
+                modeSelected.classList.replace('fa-users' ,'fa-unlock-alt')
+            } else if (mode.target == modePublic) {
+                modeSelected.classList.replace('fa-unlock-alt', 'fa-users');
+            }
+        }
+    })
 }
