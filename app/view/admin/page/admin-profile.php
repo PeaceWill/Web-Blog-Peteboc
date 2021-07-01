@@ -40,15 +40,15 @@
                                         <label class="form__label">Giới tính</label>
                                         <div class="form__gender__selection">
                                             <div class="gender__selection-group">
-                                                <input id="male-gender" class="form__input" type="radio" name="gender" value="male">
+                                                <input id="male-gender" class="form__input" type="radio" name="gender" value="0">
                                                 <label for="male-gender">Nam</label>
                                             </div>
                                             <div class="gender__selection-group">
-                                                <input id="female-gender" class="form__input" type="radio" name="gender" value="female">
+                                                <input id="female-gender" class="form__input" type="radio" name="gender" value="1">
                                                 <label for="female-gender">Nữ</label>
                                             </div>
                                             <div class="gender__selection-group">
-                                                <input id="other-gender" class="form__input" type="radio" name="gender" value="other">
+                                                <input id="other-gender" class="form__input" type="radio" name="gender" value="-1">
                                                 <label for="other-gender">Khác</label>
                                             </div>
                                         </div>
@@ -71,4 +71,8 @@
         </div>
     </div>
 </body>
+<script>
+    getAdminInfo();
+    updateAdmin();
+</script>
 </html>

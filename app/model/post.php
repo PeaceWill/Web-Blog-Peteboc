@@ -1,5 +1,5 @@
 <?php
-include '../../lib/session.php'; // fix to call file
+include_once '../../lib/session.php'; // fix to call file
 Session::init();
 
 require_once 'connection.php';
@@ -7,8 +7,9 @@ require_once '../../config/config.php';
 class Post extends Connection
 {
     private $post_table = POST_TABLE;
-    private $user_table = USER_TABLE;
     private $share_table = SHARE_TABLE;
+    private $user_table = USER_TABLE;
+    private $user_info_table = USER_INFO_TABLE;
 
     public function __construct()
     {
@@ -19,14 +20,14 @@ class Post extends Connection
      *  SELECT FUNCTION
     */
 
-    // Count public post of user
-    public function countUserPublicPost($username)
+    // Count public post of user by link
+    public function countUserPublicPost($link)
     {
-        $stmt = $this->link->prepare("SELECT COUNT(*) FROM $this->post_table WHERE username=:username AND mode=1");
-        $stmt->execute(['username' => $username]);
+        $stmt = $this->link->prepare("SELECT COUNT(*) AS number FROM $this->post_table, $this->user_info_table WHERE $this->post_table.username=$this->user_info_table.username AND link=:link AND mode=1");
+        $stmt->execute(['link' => $link]);
         $res = $stmt->fetch();
-        if ($res) {
-            return $res;
+        if ($res['number']) {
+            return $res['number'];
         } else {
             return false;
         }
@@ -35,12 +36,33 @@ class Post extends Connection
     // Get all public post
     public function getAllPublicPost()
     {
-        $stmt = $this->link->prepare("SELECT * FROM $this->post_table WHERE mode=1");
+        $stmt = $this->link->prepare("SELECT $this->post_table.id, $this->post_table.username, $this->post_table.mode, $this->post_table.content,
+                                    $this->post_table.image, $this->post_table.datetime, $this->post_table.comments, $this->post_table.shares,
+                                    $this->user_info_table.realname, $this->user_info_table.avatar FROM $this->post_table JOIN $this->user_info_table ON $this->post_table.username=$this->user_info_table.username WHERE $this->post_table.mode = 1
+                                    ORDER BY $this->post_table.datetime DESC");
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
             return $res;
-        } else {
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Get posts of user by link
+    public function getUserPostByLink($link)
+    {
+        $stmt = $this->link->prepare("SELECT $this->post_table.id, $this->post_table.mode, $this->post_table.content, $this->post_table.image,
+                                    $this->post_table.comments, $this->post_table.shares, $this->post_table.datetime, $this->post_table.username,
+                                    $this->user_info_table.realname, $this->user_info_table.avatar FROM $this->post_table JOIN $this->user_info_table
+                                    ON $this->user_info_table.username=$this->post_table.username WHERE $this->user_info_table.link=:link");
+        $stmt->execute(['link' => $link]);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($res) {
+            return $res;
+        }
+        else {
             return false;
         }
     }

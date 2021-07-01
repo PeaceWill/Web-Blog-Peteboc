@@ -27,7 +27,8 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return $res;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -42,7 +43,8 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return $res;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -79,7 +81,8 @@ class User extends Connection
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
             return $res;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -97,7 +100,23 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return $res;
-        } else {
+        } 
+        else {
+            return false;
+        }
+    }
+
+    // Select user info by link
+    public function getUserByLink($link)
+    {
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.realname, $this->user_info_table.avatar, $this->user_info_table.gender,
+                                    $this->user_info_table.phone, $this->user_info_table.address, $this->user_info_table.description FROM $this->user_info_table WHERE link=:link");
+        $stmt->execute(['link' => $link]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return $res;
+        }
+        else {
             return false;
         }
     }
@@ -109,7 +128,8 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -123,7 +143,8 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -136,7 +157,8 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     } 
@@ -168,11 +190,10 @@ class User extends Connection
         $address = isset($data['address']) ? $data['address'] : '';
         $gender = $data['gender'];
         $link = $data['username'];
-        $data_create = date('Y-m-d');
         $description = isset($data['description']) ? $data['description'] : '';
 
-        $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, date_create, description)
-                                    VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :date_create, :description)");
+        $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, description)
+                                    VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :description)");
         $stmt->execute(['username' => $username,
                         'email' => $email,
                         'realname' => $realname,
@@ -180,7 +201,6 @@ class User extends Connection
                         'address' => $address,
                         'gender' => $gender,
                         'link' => $link,
-                        'date_create' => $data_create,
                         'description' => $description]);
     }
 
@@ -213,7 +233,8 @@ class User extends Connection
                         'username' => $username]);
         if ($stmt) {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -224,7 +245,8 @@ class User extends Connection
                         'username' => $username]);
         if ($stmt) {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -247,6 +269,22 @@ class User extends Connection
         }
 
         return true;
+    }
+
+    public function updateUserPassword($username, $password, $new_password)
+    {
+        $password = hash('sha256', $password);
+        $new_password = hash('sha256', $new_password);
+        $stmt = $this->link->prepare("UPDATE $this->user_table SET password=:new_password WHERE username=:username AND password=:password");
+        $stmt->execute(['new_password' => $new_password,
+                        'username' => $username,
+                        'password' => $password]);
+        if ($stmt) {
+            return true;
+        } 
+        else {
+            return false;
+        }
     }
 }
 ?>

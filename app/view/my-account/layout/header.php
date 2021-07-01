@@ -1,5 +1,11 @@
+<?php
+    include_once 'lib/session.php';
+    Session::init();
+    $session_value = Session::get('user');
+    $session_display = Session::get('display');
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="top">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +18,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="./assets/js/modal.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="./assets/js/asteroid-alert.js"></script>
 </head>
 <body>
     <!-- header -->
@@ -20,13 +28,13 @@
             <div class="row">
                 <div class="nav__header">
                     <div class="logo__wrapper">
-                        <a class="logo__link" href="index.html">
+                        <a class="logo__link" href="index.php">
                             <img class="logo__image" src="./assets/img/logo/cropped-logo-transparent.png" alt="">
                         </a>
                     </div>
                     <ul class="nav__list">
                         <li class="nav__list-item">
-                            <a class="nav__list-link" href="">
+                            <a class="nav__list-link" href="about.php">
                                 Giới thiệu
                             </a>
                         </li>
@@ -61,21 +69,49 @@
                             </ul>
                         </li>
                         <li class="nav__list-item">
-                            <span class="nav__list-link">
-                                Tài khoản
-                                <i class="far fa-user"></i>
-                            </span>
-                            <!-- list user action -->
-                            <ul class="nav__user__action">
-                                <li id="open__login__modal" class="user__action-item">
-                                    <i class="fas fa-user pad-right-10"></i>
-                                    Đăng nhập 
-                                </li>
-                                <li id="open__signup__modal" class="user__action-item">
-                                    <i class="fas fa-signature pad-right-10"></i>
-                                    Đăng ký
-                                </li>
-                            </ul>
+                            <?php
+                                if (!Session::checkSession('user')) {
+                                    $html = '
+                                            <span class="nav__list-link">
+                                                Tài khoản
+                                                <i class="far fa-user"></i>
+                                            </span>
+                                            <ul class="nav__user__action">
+                                                <li id="open__login__modal" class="user__action-item">
+                                                    <i class="fas fa-user pad-right-10"></i>
+                                                    Đăng nhập 
+                                                </li>
+                                                <li id="open__signup__modal" class="user__action-item">
+                                                    <a class="user__action-link" href="register.html">
+                                                        <i class="fas fa-signature pad-right-10"></i>
+                                                        Đăng ký
+                                                    </a>
+                                                </li>
+                                            </ul>';
+                                } else {
+                                    $html = '
+                                            <span class="nav__list-link">
+                                                '.$session_display.'
+                                                <i class="far fa-user"></i>
+                                            </span>
+                                            <!-- list user action -->
+                                            <ul class="nav__user__action">
+                                                <li class="user__action-item">
+                                                    <a class="user__action-link" href="profile.php">
+                                                        <i class="fas fa-user pad-right-10"></i>
+                                                        Tài khoản 
+                                                    </a>
+                                                </li>
+                                                <li class="user__action-item">
+                                                    <a class="user__action-link" href="controller/client/user.php?action=logout">
+                                                        <i class="fas fa-sign-out-alt pad-right-10"></i>
+                                                        Đăng xuất
+                                                    </a>
+                                                </li>
+                                            </ul>';
+                                }
+                                echo $html;
+                            ?>
                         </li>
                     </ul>
                 </div>
@@ -108,7 +144,7 @@
                         <span class="modal__error__message" id="modal__error__message-login"></span>
                     </div>
                     <div class="form-group">
-                        <button class="modal__form__submit-button">Đăng nhập</button>
+                        <button id="log__button" class="modal__form__submit-button">Đăng nhập</button>
                     </div>
 
                     <div class="form-group forgot__pass">
@@ -118,52 +154,7 @@
             </div>
         </div>
     </div>
-    <!-- banner -->
-    <div class="banner banner-linear-gradient">
-        <div class="grid wide" style="padding-top: 170px;">
-            <div class="row">
-                <div class="banner__title">Giới thiệu</div>
-            </div>
-        </div>
-    </div>
-    <!-- main -->
-    <div class="grid wide">
-        <div class="row">
-            <article id="" class="section section-text mrg-top-80">
-                <div class="row" style="justify-content: center;">
-                    <div class="article__content col l-8 m-8 c-12">
-                        <h2>Pê tê bóc</h2>
-                        <p>Pê tê bóc là mạng xã hội ….0 (bốn chấm và số không) được xây dựng trên hệ thống điện toán đám mây ảo và sắp được các chuyên gia công nghệ thông tin hàng đầu thế giới thổi bay về Việt Nam</p>
-                        <p>Vì là của người Việt, cho người Việt và chất lượng quá tuyệt vời, Pê tê bóc đã được ưu ái nhắc đích danh trong buổi tường trình thông qua luật an ninh mạng trước quốc hội vừa qua.</p>
-                    </div>
-                </div>
-            </article>  
-        </div>
-    </div>
-    <!-- footer -->
-    <footer class="footer mrg-top-80">
-        <div class="grid wide">
-            <div class="row">
-                <div class="footer__contact">
-                    <div class="social__contact">
-                        <label>Mạng xã hội</label>
-                        <a href="">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                    <div class="copyright">
-                        Một sản phẩm của Pê tê bóc
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    
     <script>
         catchEventLog();
+        login();
     </script>
-</body>
-</html>

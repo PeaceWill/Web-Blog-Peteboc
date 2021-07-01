@@ -7,10 +7,6 @@ function catchEventLog() {
         modal.style.display = 'block';
     }
 
-    document.querySelector('#open__signup__modal').onclick = () => {
-        window.location.href = "https://www.google.com";
-    }
-
     window.onclick = (event) => {
         if (event.target == modal_overlay) {
             modal.style.display = 'none';
@@ -19,13 +15,7 @@ function catchEventLog() {
 }
 
 function openEditPostModal() {
-    var openButton = document.querySelectorAll('#post__setting-edit');
-    openButton.forEach((item) => {
-        item.onclick = () => {
-            document.querySelector('.edit__post-frame').style.display = 'block';
-        }
-    });
-
+    document.querySelector('.edit__post-frame').style.display = 'block';
     var modeSelected = document.querySelector('#mode-selected');
     var modePrivate = document.querySelector('#mode-private');
     var modepublic = document.querySelector('#mode-public');
@@ -50,19 +40,25 @@ function closeEditPostModal() {
 
 function openEditCommentModal() {
     var editModal = document.querySelector('.edit__comment-frame');
-    var openButton = document.querySelectorAll('.comment__edit');
-    openButton.forEach((item) => {
-        item.onclick = () => {
-            editModal.style.display = 'block';
-        }
-    });
+    editModal.style.display = 'block';
 }
 
 function closeEditCommentModal() {
     var closeButton = document.querySelector('#close__edit-comment');
     closeButton.onclick = () => {
-        console.log('close');
         document.querySelector('.edit__comment-frame').style.display = 'none';
+    }
+}
+
+function openAddCommentModal() {
+    var addComment = document.querySelector('.add__comment-frame');
+    addComment.style.display = 'block';
+}
+
+function closeAddCommentModal() {
+    var closeButton = document.querySelector('#close__add-comment');
+    closeButton.onclick = () => {
+        document.querySelector('.add__comment-frame').style.display= 'none';
     }
 }
 
@@ -80,4 +76,40 @@ function selectMode() {
             }
         }
     })
+}
+
+var linkApi = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client`;
+
+var sendAjax = (option, callback) => {
+    $.ajax({
+        url: option.url,
+        type: option.type,
+        data: option.data,
+        success: (_data) => {
+            callback(_data);
+        }
+    });
+}
+
+var renderModal = (_data) => {
+    data = JSON.parse(_data);
+    if (data.status == 0) {
+        document.querySelector('.modal__error__message').innerText = data.message;
+    } else {
+        window.location.reload();
+    }
+}
+
+
+function login() {
+    var logButton = document.querySelector('#log__button');
+    logButton.onclick = (event) => {
+        event.preventDefault();
+        option = {
+            url: `${linkApi}/user.php`,
+            type: 'GET',
+            data: $('#form__modal-log').serialize()
+        }
+        sendAjax(option, renderModal);
+    }
 }

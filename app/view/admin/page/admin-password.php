@@ -18,6 +18,7 @@
                                         <label class="form__label">Nhập lại mật khẩu</label>
                                         <input class="form__input" type="password" name="re-new__pw">
                                     </div>
+                                    <input type="hidden" name="action" value="change-password">
                                     <button id="submit__admin-pw" class="submit-button--smooth mrg-top-40">Cập nhập</button>
                                 </form>
                             </div>
@@ -27,5 +28,8 @@
             </div>
         </div>
     </div>
+    <script>
+        updatePassword();
+    </script>
 </body>
 </html>

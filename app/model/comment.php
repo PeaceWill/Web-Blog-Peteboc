@@ -1,15 +1,16 @@
 <?php
-include '../lib/session.php'; // fix to call file
+include_once '../../lib/session.php'; // fix to call file
 Session::init();
 
-require_once 'connection.php';
-require_once '../config/config.php';
+include_once 'connection.php';
+include_once '../../config/config.php';
 class Comment extends Connection
 {
     private $comment_table = COMMENT_TABLE;
     private $post_table = POST_TABLE;
     private $share_table = SHARE_TABLE;
     private $user_table = USER_TABLE;
+    private $user_info_table = USER_INFO_TABLE;
 
     public function __construct()
     {
@@ -23,13 +24,15 @@ class Comment extends Connection
     // Get comment by post id
     public function getCommentsByPostId($postID)
     {
-        $stmt = $this->link->prepare("SELECT *, $this->user_table.realname FROM $this->comment_table
-                                     INNER JOIN $this->user_table ON $this->user_table.username=$this->comment_table.username WHERE post_id=:postID");
+        $stmt = $this->link->prepare("SELECT $this->comment_table.id, $this->comment_table.message, $this->comment_table.datetime, $this->user_info_table.realname ,
+                                    $this->user_info_table.avatar, $this->user_info_table.link, $this->user_info_table.username FROM $this->comment_table
+                                    JOIN $this->user_info_table ON $this->user_info_table.username=$this->comment_table.username WHERE post_id=:postID");
         $stmt->execute(['postID' => $postID]);
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
             return $res;
-        } else {
+        } 
+        else {
             return false;
         }
     }

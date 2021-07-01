@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./assets/css/grid.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="./assets/js/asteroid-alert.js"></script>
 </head>
 <body>
     <div style="display: flex; justify-content: center;">
@@ -34,31 +36,32 @@
                 <div class="flex-row flex-align space-around" style="width: 100%;">
                     <div class="form__profile-gender">
                         <label class="mrg-right-10" for="male-gender">Nam</label>
-                        <input type="radio" name="gender" id="male-gender" required>
+                        <input type="radio" name="gender" id="male-gender" value="1" required>
                     </div>
                     <div class="form__profile-gender">
                         <label class="mrg-right-10" for="female-gender">Nữ</label>
-                        <input type="radio" name="gender" id="female-gender">
+                        <input type="radio" name="gender" id="female-gender" value="0">
                     </div>
                     <div class="form__profile-gender">
                         <label class="mrg-right-10" for="other">Khác</label>
-                        <input type="radio" name="gender" id="other">
+                        <input type="radio" name="gender" id="other" value="-1">
                     </div>
                 </div>
             </div>
             <div class="form__group">
                 <label>Mật khẩu</label>
-                <input class="form__group-input" type="text" name="password" required>
+                <input class="form__group-input" type="password" name="password" required>
             </div>
             <div class="form__group">
                 <label>Nhập lại mật khẩu</label>
-                <input class="form__group-input" type="text" name="re-password" required>
+                <input class="form__group-input" type="password" name="re-password" required>
             </div>
             <div class="form__group">
                 <span id="response__msg"></span>
             </div>
-            <button class="submit-button--smooth mrg-top-12" style="width: 100%;">Đăng ký</button>
+            <button id="register__button" class="submit-button--smooth mrg-top-12" style="width: 100%;">Đăng ký</button>
         </form>
     </div>
 </body>
+<script src="./assets/js/register.js"></script>
 </html>

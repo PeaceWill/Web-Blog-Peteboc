@@ -30,6 +30,17 @@ function callAjax(option, callback) {
     });
 }
 
+function callAjaxSerialize(option, callback) {
+    $.ajax({
+        url: option.url,
+        type: option.type,
+        data: option.data,
+        success: ((data) => {
+            callback(data);
+        })
+    });
+}
+
 // Send image
 function callAjaxWithImage(option, callback) {
     $.ajax({
@@ -41,6 +52,24 @@ function callAjaxWithImage(option, callback) {
         success: (data) => {
             callback(data);
         }
+    });
+}
+
+function getAdminInfo() {
+    let link = `${linkApi}/admin-info.php`;
+    callApi(link, 'GET', renderUserInfo)
+}
+
+function getListUser() {
+    var link = `${linkApi}/user.php`;
+    callApi(link, 'GET', renderListUser);
+}
+
+function getUserInfo() {
+    var url = window.location.href.split('?');
+    var link = `${linkApi}/user.php?${url[1]}`;
+    $(document).ready(() => {
+        callApi(link, 'GET', renderUserInfo);
     });
 }
 
@@ -69,6 +98,27 @@ function createUser() {
     }
 }
 
+function updateAdmin() {
+    var button = document.querySelector('#submit__admin-info');
+    button.onclick = (event) => {
+        event.preventDefault();
+        event.preventDefault();
+        var link = `${linkApi}/user.php`;
+        var avatar = document.querySelector('#upload-avatar').files[0];
+        var inputData = getFormData($('#form__admin-info'));
+        var fd = new FormData();
+        fd.append('avatar', avatar);
+        fd.append('data', JSON.stringify(inputData));
+        fd.append('action', 'update');
+        var option = {
+            'url': link,
+            'type': 'POST',
+            'data': fd
+        }
+        callAjaxWithImage(option, alertFunc);
+    }
+}
+
 function updateUser() {
     var button = document.querySelector('#submit__user-info');
     button.onclick = (event) => {
@@ -89,6 +139,19 @@ function updateUser() {
     }
 }
 
+function updatePassword() {
+    const button  = document.querySelector('#submit__admin-pw');
+    button.onclick = (event) => {
+        event.preventDefault();
+        let option = {
+            url: `${linkApi}/admin-info.php`,
+            type: 'POST',
+            data: $('#form__admin-pw').serialize()
+        }
+        callAjaxSerialize(option, alertFunc);
+    }
+}
+
 function updateIntroduction() {
     var button = document.querySelector('#submit__intro');
     button.onclick = (event) => {
@@ -104,19 +167,6 @@ function updateIntroduction() {
         }
         callAjax(option, ((data) => {console.log(data)}));
     }
-}
-
-function getListUser() {
-    var link = `${linkApi}/user.php`;
-    callApi(link, 'GET', renderListUser);
-}
-
-function getUserInfo() {
-    var url = window.location.href.split('?');
-    var link = `${linkApi}/user.php?${url[1]}`;
-    $(document).ready(() => {
-        callApi(link, 'GET', renderUserInfo);
-    });
 }
 
 function renderStrectCard(data) {
@@ -206,6 +256,11 @@ function getFormData(selector){
 
 function alertFunc(data) {
     data = JSON.parse(data);
-    alert(data.message);
-    window.location.reload();
+    if (data.status == 1) {
+        alert(data.message);
+        window.location.reload();
+    }
+    else {
+        alert(data.message);
+    }
 }

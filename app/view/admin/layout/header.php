@@ -15,13 +15,13 @@
                         </figure>
                         <ul class="admin__action-list">
                             <li class="admin__action-item"> 
-                                <a class="admin__action-link font-rajdhani" href="">
+                                <a class="admin__action-link font-rajdhani" href="admin-profile.php">
                                     Profile
                                     <i class="fas fa-cog"></i>
                                 </a>
                             </li>
                             <li class="admin__action-item"> 
-                                <a class="admin__action-link font-rajdhani" href="">
+                                <a class="admin__action-link font-rajdhani" href="admin-password.php">
                                     Đổi mật khẩu
                                     <i class="fas fa-key"></i>
                                 </a>
