@@ -28,14 +28,14 @@ const renderPost = (_data) => {
                 <div id="post__id-${value.id}" class="post__box border-radius-smooth ground-color-white box-shadow-6">
                     <div class="post__box-body">
                         <div class="post__heading">
-                            ${ownerPostAvatar(value.avatar)}
+                            ${ownerPostAvatar(value.avatar, value.link)}
                             ${postHead(value.realname, value.datetime, value.mode)}
-                            ${postSetting(value.owner)}
+                            ${postSetting(value.owner, value.id)}
                         </div>
                         ${postContent(value.content)}
                     </div>
                     ${postImage(value.image)}
-                    ${postFooter()}
+                    ${postFooter(value.id)}
                     <div class="post__comment-area">
 
                     </div>
@@ -53,7 +53,7 @@ const renderPost = (_data) => {
 const renderComments = (_data, selector) => {
     if (_data) {
         var html = _data.map((comment) => {
-            return commentsPost(comment.avatar, comment.realname, comment.datetime, comment.message, comment.link, comment.owner);
+            return commentsPost(comment.avatar, comment.realname, comment.datetime, comment.message, comment.link, comment.owner, comment.id);
         });
         document.querySelector(selector).innerHTML = html.join('');
     }

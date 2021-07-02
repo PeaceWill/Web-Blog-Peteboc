@@ -14,7 +14,7 @@
                             <div class="post__box-body">
                                 <div class="post__heading">
                                     <div class="flex-col pad-left-12 flex-growth-2">
-                                        <span class="font-verdana--geneva post__owner">Hưng Nguyễn</span>
+                                        <span class="font-verdana--geneva post__owner"><?php echo Session::get('display') ?></span>
                                         <span class="edit__mode">
                                             <i id="mode-selected" class="fas fa-users"></i>
                                             <ul class="mode-list box-shadow-6 font-rajdhani">
@@ -29,10 +29,17 @@
                                 </div>
                             </div>
                             <div class="post__box-image">
-                                <img src="" alt="">
+                                <img id="post__image" src="" alt="">
                             </div>
-                            <div class="post__footer" style="justify-content: center;">
-                                <label class="button__upload-image" for="upload__image-post">Upload image</label>
+                            <div class="post__footer">
+                                <span class="post__activity border-radius-smooth" id="upload__post">
+                                    <i class="fas fa-paint-brush pad-right-10 "></i>
+                                    Đăng tải
+                                </span>
+                                <label class="button__upload-image" for="upload__image-post">
+                                    <i class="fas fa-image pad-right-10 "></i>
+                                    Upload image
+                                </label>
                                 <input type="file" id="upload__image-post" style="display: none;">
                             </div>
                         </div>
@@ -42,6 +49,7 @@
            </div>
        </div>
    </div>
+   <script type="module" src="./assets/js/up-post.js"></script>
    <script>
        selectMode();
    </script>

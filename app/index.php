@@ -211,7 +211,7 @@
     <div class="edit__comment-frame">
         <div class="modal__overlay">
             <div style="background-color: #fff; margin: auto; position: relative; border-radius: 5px; width: 60%; margin-top: 25%;">
-                <form action="" method="POST" class="form__comment">
+                <div action="" method="POST" class="form__comment">
                     <div class="form__heading font-rajdhani">
                         Edit comment
                         <span id="close__edit-comment" class="close__edit">
@@ -219,8 +219,8 @@
                         </span>
                     </div>
                     <textarea name="edit__comment" id="edit__comment-input" cols="30" rows="3"></textarea>
-                    <button>Save</button>
-                </form>
+                    <button id="edit__comment">Save</button>
+                </div>
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@
     <div class="add__comment-frame">
         <div class="modal__overlay">
             <div style="background-color: #fff; margin: auto; position: relative; border-radius: 5px; width: 60%; margin-top: 25%;">
-                <form action="" method="POST" class="form__comment">
+                <div action="" method="POST" class="form__comment">
                     <div class="form__heading font-rajdhani">
                         Comment
                         <span id="close__add-comment" class="close__edit">
@@ -236,8 +236,8 @@
                         </span>
                     </div>
                     <textarea name="add__comment" id="add__comment-input" cols="30" rows="3"></textarea>
-                    <button>Submit</button>
-                </form>
+                    <button id="add__comment">Submit</button>
+                </div>
             </div>
         </div>
     </div>
@@ -245,7 +245,7 @@
     <div class="edit__post-frame">
         <div class="modal__overlay">
             <div class="modal__body" style="width: 540px;">
-                <form class="form__edit__post" action="" method="POST">
+                <div class="form__edit__post" action="" method="POST">
                     <div class="form__heading font-rajdhani">
                         Edit post
                         <span id="close__edit-post" class="close__edit">
@@ -254,32 +254,25 @@
                     </div>
                     <div class="form__edit-body">
                         <div class="form__edit-body--top">
-                            <img class="circle-avatar post__avatar" src="./assets/img/avatar/186608.jpg" alt="">
+                            <img class="circle-avatar post__avatar" id="form__edit-avatar" src="" alt="">
                             <div class="flex-col pad-left-12 flex-growth-2">
-                                <span class="font-verdana--geneva post__owner">gaughegom</span>
+                                <span class="font-verdana--geneva post__owner" id="form__edit-realname"></span>
                                 <span class="edit__mode">
-                                    <i id="mode-selected" class="fas fa-unlock-alt"></i>
-                                    <!-- <i class="fas fa-users" style="display: none;"></i> -->
-                                    <ul class="mode-list box-shadow-6 font-rajdhani">
-                                        <li id="mode-private" class="mode-select">Private</li>
-                                        <li id="mode-public" class="mode-select">Public</li>
-                                    </ul>
+                                    <i id="mode-selected" class="fas fa-users"></i>                        
                                 </span>
                             </div>
                         </div>
-                        <div class="form__edit-content">
-                            Test UI
-                        </div>
+                        <textarea class="form__edit-content" id="form__edit-content" rows="4"> </textarea>
                     </div>
                     <div class="form__edit__image">
-                        <img class="post__image" src="./assets/img/post/pixel-slide1.jpg" alt="">
+                        <img class="post__image" id="form__edit-image" src="" alt="">
                         <label class="hover-08" for="edit-post-image">Edit</label>
                         <input id="edit-post-image" type="file">
                     </div>
                     <div class="form__edit-footer">
                         <button class="edit__button">Save</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

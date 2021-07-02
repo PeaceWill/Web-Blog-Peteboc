@@ -39,34 +39,9 @@
                             </a>
                         </li>
                         <li class="nav__list-item">
-                            <span class="nav__list-link">
-                                Thông báo
-                                <i class="far fa-bell"></i>
-                            </span>
-                            <!-- notification -->
-                            <ul class="nav__notification">
-                                <li class="nav__notification-item none-read">
-                                    <a class="nav__notification-link" href="">
-                                        <div class="notification__content">
-                                            <span class="notification__username">
-                                                Gaughegom
-                                            </span> 
-                                            đã comment trên một post của bạn
-                                        </div>
-                                        <span class="notification__none-read"></span>
-                                    </a>
-                                </li>
-                                <li class="nav__notification-item">
-                                    <a class="nav__notification-link" href="">
-                                        <div class="notification__content">
-                                            <span class="notification__username">
-                                                Gaughegom
-                                            </span> 
-                                            đã comment trên một post của bạn
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
+                            <a class="nav__list-link" href="user.php?link=<?php echo Session::get('link'); ?>">
+                                Tường nhà
+                            </a>
                         </li>
                         <li class="nav__list-item">
                             <?php
@@ -90,10 +65,10 @@
                                             </ul>';
                                 } else {
                                     $html = '
-                                            <span class="nav__list-link">
+                                            <a class="nav__list-link">
                                                 '.$session_display.'
                                                 <i class="far fa-user"></i>
-                                            </span>
+                                            </a>
                                             <!-- list user action -->
                                             <ul class="nav__user__action">
                                                 <li class="user__action-item">

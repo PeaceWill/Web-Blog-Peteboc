@@ -1,0 +1,3 @@
+<?php
+	echo uniqid(strtotime(date('Y-m-d H:i:s'))).'.'.'jpg';
+?>

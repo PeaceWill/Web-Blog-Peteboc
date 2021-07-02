@@ -1,3 +1,5 @@
+var linkApi = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client`;
+
 function catchEventLog() {
     var modal = document.querySelector('.modal');
     var modal_overlay = document.querySelector('.modal__overlay');
@@ -14,7 +16,7 @@ function catchEventLog() {
     }
 }
 
-function openEditPostModal() {
+function openEditPostModal(postID) {
     document.querySelector('.edit__post-frame').style.display = 'block';
     var modeSelected = document.querySelector('#mode-selected');
     var modePrivate = document.querySelector('#mode-private');
@@ -29,6 +31,43 @@ function openEditPostModal() {
             }
          }
     });
+    const option = {
+        url: `${linkApi}/post.php`,
+        type: 'GET',
+        data: `id=${postID}`
+    }
+    sendAjax(option, renderEditModal);
+    const uploadImage = document.querySelector('#edit-post-image');
+    const imagePreview = document.querySelector('#form__edit-image'); 
+    uploadImage.addEventListener('change', () => { 
+        const file = uploadImage.files[0];
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.addEventListener('load', () => {
+                imagePreview.src = fileReader.result;
+            });
+        }
+    });
+
+    const buttonSubmit = document.querySelector('.edit__button');
+    buttonSubmit.onclick = () => {
+        const image = document.querySelector('#edit-post-image').files[0];
+        const content = document.querySelector('#form__edit-content').value;
+        let fd = new FormData();
+        fd.append('image', image);
+        fd.append('content', content);
+        fd.append('id', postID);
+        fd.append('action', 'update');
+        const option = {
+            url: `${linkApi}/post.php`,
+            type: 'POST',
+            data: fd,
+            contentType: false,
+            processData: false
+        }
+        sendAjax(option, reloadPage);
+    }
 }
 
 function closeEditPostModal() {
@@ -38,9 +77,19 @@ function closeEditPostModal() {
     }
 }
 
-function openEditCommentModal() {
-    var editModal = document.querySelector('.edit__comment-frame');
+function openEditCommentModal(commentID) {
+    const editModal = document.querySelector('.edit__comment-frame');
     editModal.style.display = 'block';
+    const buttonSubmit = editModal.querySelector('#edit__comment');
+    buttonSubmit.onclick = () => {
+        const commentMessage = editModal.querySelector('#edit__comment-input').value;
+        const option = {
+            url: `${linkApi}/comment.php`,
+            type: 'PUT',
+            data: `action=update&id=${commentID}&message=${commentMessage}`,
+        }
+        sendAjax(option, reloadPage);
+    }
 }
 
 function closeEditCommentModal() {
@@ -50,9 +99,20 @@ function closeEditCommentModal() {
     }
 }
 
-function openAddCommentModal() {
-    var addComment = document.querySelector('.add__comment-frame');
+function openAddCommentModal(postID) {
+    const addComment = document.querySelector('.add__comment-frame');
     addComment.style.display = 'block';
+    const buttonSubmit = addComment.querySelector('#add__comment');
+    buttonSubmit.onclick = () => {
+        const commentMessage = addComment.querySelector('#add__comment-input').value;
+        const option = {
+            url: `${linkApi}/comment.php`,
+            type: 'POST',
+            data: `post_id=${postID}&message=${commentMessage}`
+        }
+        sendAjax(option, reloadPage);
+        
+    }
 }
 
 function closeAddCommentModal() {
@@ -60,6 +120,27 @@ function closeAddCommentModal() {
     closeButton.onclick = () => {
         document.querySelector('.add__comment-frame').style.display= 'none';
     }
+}
+
+function deleteComment(commentID) {
+    const option = {
+        url: `${linkApi}/comment.php`,
+        type: 'DELETE',
+        data: `id=${commentID}`
+    }
+    sendAjax(option, reloadPage);
+}
+
+function deletePost(postID) {
+    $confirm('Xóa bài viết?', '#d54f3e')
+        .then(() => {
+            const option = {
+                url: `${linkApi}/post.php`,
+                type: 'DELETE',
+                data: `id=${postID}`
+            }
+            sendAjax(option, reloadPage );
+        })
 }
 
 function selectMode() {
@@ -78,20 +159,21 @@ function selectMode() {
     })
 }
 
-var linkApi = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client`;
 
-var sendAjax = (option, callback) => {
+const sendAjax = (option, callback) => {
     $.ajax({
         url: option.url,
         type: option.type,
         data: option.data,
+        contentType: option.contentType,
+        processData: option.processData,
         success: (_data) => {
             callback(_data);
         }
     });
 }
 
-var renderModal = (_data) => {
+const renderModal = (_data) => {
     data = JSON.parse(_data);
     if (data.status == 0) {
         document.querySelector('.modal__error__message').innerText = data.message;
@@ -100,6 +182,31 @@ var renderModal = (_data) => {
     }
 }
 
+const renderEditModal = (_data) => {
+    data = JSON.parse(_data);
+    const avatar = document.querySelector('#form__edit-avatar').src = `./assets/img/avatar/${data.avatar}`;
+    const displayName = document.querySelector('#form__edit-realname').innerText = data.realname;
+    const content = document.querySelector('#form__edit-content').innerText = `${data.content}`;
+    const image = document.querySelector('#form__edit-image').src = `./assets/img/post/${data.image}`;
+
+}
+
+function reloadPage(_data) {
+    data = JSON.parse(_data);
+    if (data.status == 0) {
+        $alert(data.message, '#d54f3e');
+    }
+    else if (data.status == 1) {
+        window.location.reload();
+    }
+}
+
+function confirmBox(commentID) {
+    $confirm('Xóa comment?', '#d54f3e')
+        .then(() => {
+            deleteComment(commentID);
+        })
+}
 
 function login() {
     var logButton = document.querySelector('#log__button');

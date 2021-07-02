@@ -37,8 +37,74 @@ class Comment extends Connection
         }
     }
 
-    // Get comment by share id 
+    // Check owner's comment
+    public function isOwnerComment($id, $username)
+    {
+        $stmt = $this->link->prepare("SELECT $this->comment_table.id FROM $this->comment_table WHERE id=:id AND username=:username");
+        $stmt->execute(['id' => $id,
+                        'username' => $username]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-    
+    /** 
+     *   INSERT FUNCTION
+    */
+
+    // Insert comment
+    public function insertComment($post_id, $username, $message)
+    {
+        $stmt = $this->link->prepare("INSERT INTO $this->comment_table (post_id, username, message) VALUES (:post_id, :username, :message)");
+        $stmt->execute(['post_id' => $post_id,
+                        'username' => $username,
+                        'message' => $message]);
+        if ($stmt) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**  
+     *   UPDATE FUNCTION
+    */
+
+    // Update comment
+    public function updateComment($id, $username, $message)
+    {
+        $stmt = $this->link->prepare("UPDATE $this->comment_table SET message=:message WHERE id=:id AND username=:username");
+        $stmt->execute(['message' => $message,
+                        'id' => $id,
+                        'username' => $username]);
+        if ($stmt) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
+     *  DELETE FUNCTION 
+    */
+
+    public function deleteComment($id, $username)
+    {
+        $stmt = $this->link->prepare("DELETE FROM $this->comment_table WHERE id=:id AND username=:username");
+        $stmt->execute(['id' => $id,
+                        'username' => $username]);
+        if ($stmt) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
 ?>

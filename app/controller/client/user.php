@@ -123,6 +123,7 @@ function login($username, $password)
             $display = $userClass->getUserByUsername($username);
             Session::set('user', $username);
             Session::set('display', $display['realname']);
+            Session::set('link', $display['link']);
         } else {
             $response = array(
                 'status' => 0,
@@ -216,6 +217,7 @@ function createUser($data)
         $response['message'] = 'Giới tính không hợp lệ';
     } 
     else {
+        $data['username'] = $validate->filter($data['username']);
         $data['level'] = 0;
         $userClass->insertUser($data);
         $userClass->insertUserInfo($data);
@@ -263,6 +265,9 @@ function updateUser($data)
         } 
         else {
             $data['username'] = $access;
+            if ($data['description']) {
+                $data['description'] = $validate->filter($data['description']);
+            }
             if (!empty($data['avatar']) and !empty($data['avatar_save'])) {
                 if (!$validate->validateImage($data['avatar'])) {
                     $response['status'] = 0;
