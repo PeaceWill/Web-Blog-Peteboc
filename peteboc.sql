@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 02, 2021 at 05:42 PM
+-- Generation Time: Jul 03, 2021 at 01:40 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.4.9
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   `level` tinyint(1) DEFAULT '0',
-  `state` tinyint(1) NOT NULL,
+  `state` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -138,7 +138,8 @@ INSERT INTO `user` (`username`, `password`, `level`, `state`) VALUES
 ('Falcon', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 1, 0),
 ('gaughegom02', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e', 0, 0),
 ('shark', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 0, 1),
-('smallfish', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 0, 1);
+('smallfish', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 0, 1),
+('user123', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -173,7 +174,8 @@ INSERT INTO `user_info` (`username`, `realname`, `email`, `gender`, `phone`, `ad
 ('Falcon', 'Đại bàng', 'falcon@mail.com', 1, '0321424442', 'From sky', 'Falcon', 'Ai nhanh hơn ta', 'Falcon.jpg', '2021-06-30 23:06:13'),
 ('gaughegom02', 'Gấu 02', 'gaughegom02@gmail.com', 1, '', '', 'gaughegom02', '', 'default.jpg', '2021-07-01 08:53:46'),
 ('shark', 'Cá mập', 'shark@gmail.com', 0, '0554664123', 'From ocean', 'shark', 'Ra đường là cá mập &lt;3', 'shark.jpg', '2021-06-30 10:39:44'),
-('smallfish', 'Cá con', 'cacon@gmail.com', 1, '032141114', 'From ocean', 'smallfish', 'Khi ở nhà là cá con ^^', 'smallfish.jpg', '2021-06-30 00:00:00');
+('smallfish', 'Cá con', 'cacon@gmail.com', 1, '032141114', 'From ocean', 'smallfish', 'Khi ở nhà là cá con ^^', 'smallfish.jpg', '2021-06-30 00:00:00'),
+('user123', 'User 123', 'testuser123@gmail.com', 1, '', '', 'user123', '', 'default.jpg', '2021-07-03 01:31:02');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

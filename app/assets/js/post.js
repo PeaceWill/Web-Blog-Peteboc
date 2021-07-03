@@ -1,6 +1,6 @@
 // const link = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/`;
-import { commentsPost } from "./component/comment/comment"
-import { ownerPostAvatar, postContent, postFooter, postHead, postImage, postSetting } from "./component/post/post"
+import { commentsPost } from "./component/comment/comment.js"
+import { ownerPostAvatar, postContent, postFooter, postHead, postImage, postSetting } from "./component/post/post.js"
 
 function callApi(url, option, callback) {
     fetch(url, {option})
