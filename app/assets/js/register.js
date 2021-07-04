@@ -16,6 +16,9 @@ const render = (_data) => {
         document.querySelector('#response__msg').innerText = _data.message;
     }
     else if (_data.status == 1) {
-        $alert(_data.message, '#4484ba');
+        $alert(_data.message, '#4484ba')
+        .then(() => {
+            window.location.href=`http://${window.location.hostname}/Web-Blog-Peteboc/app`;
+        })
     }
 }

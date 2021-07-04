@@ -3,6 +3,7 @@
     Session::init();
     $session_value = Session::get('user');
     $session_display = Session::get('display');
+    
 ?>
 <!DOCTYPE html>
 <html lang="en" id="top">

@@ -16,6 +16,25 @@ class Validate {
         return $data;
     }
 
+    public function validateUsername($username)
+    {
+        $regex = '/^[a-zA-Z0-9]{6,}$/';
+        if (preg_match($regex, $username)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function validatePassword($password)
+    {
+        if (strlen($password) < 6) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public function validateEmail($email) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;

@@ -194,6 +194,12 @@ function createUser($data)
     if (empty($data['username']) or empty($data['password']) or empty($data['realname']) or empty($data['email']) or empty($data['re-password'])) {
         $response['status'] = 0;
         $response['message'] = 'Vui lòng nhập đầy đủ thông tin';
+    } else if (!$validate->validateUsername($data['username'])) {
+        $response['status'] = 0;
+        $response['message'] = 'Tên tài khoản phải ít nhất 6 ký tự, không gồm ký tự đặc biệt';
+    } else if (!$validate->validatePassword($data['password'])) {
+        $response['status'] = 0;
+        $response['message'] = 'Mật khẩu tối thiểu 6 ký tự';
     } else if ($data['password'] != $data['re-password']) {
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu nhập không khớp';
@@ -213,7 +219,7 @@ function createUser($data)
         $data['username'] = $validate->filter($data['username']);
         $data['level'] = 0;
         $data['link'] = base64_decode(uniqid($data['username']));
-        
+
         $userClass->insertUser($data);
         $userClass->insertUserInfo($data);
 
@@ -258,16 +264,15 @@ function updateUser($data)
             $response['status'] = 0;
             $response['message'] = 'Vui lòng chọn giới tính';
             return $response;
-        } else if (!isset($data['link']) or empty($data['link'])) {
+        } else if (!isset($data['link']) or empty($data['link']) or !$validate->validateUsername($data['link'])) {
             $response['status'] = 0;
-            $response['message'] = 'Link không hợp lệ';
+            $response['message'] = 'Link không được bao gồm kí tự đặc biệt';
             return $response;
         } else if ($userClass->isLinkExisted($access, $data['link'])) {
             $response['status'] = 0;
             $response['message'] = 'Link đã tồn tại';
             return $response;
-        }
-        else {
+        } else {
             $data['username'] = $access;
             if ($data['description']) {
                 $data['description'] = $validate->filter($data['description']);
@@ -293,6 +298,7 @@ function updateUser($data)
                 $response['status'] = 1;
                 $response['message'] = 'Cập nhập thành công';
             }
+            Session::set('link', $data['link']);
         }
     }
     return $response;
