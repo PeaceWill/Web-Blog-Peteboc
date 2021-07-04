@@ -14,23 +14,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $res['token'] = Token::generateToken();
             }
             echo json_encode($res);
-        } 
-        else if (isset($_GET['action']) and $_GET['action'] == 'logout') {
+        } else if (isset($_GET['action']) and $_GET['action'] == 'logout') {
             // Log out
             $res = logout();
             header('location:../../index.php');
-        }
-        else if (isset($_GET['token'])) {
+        } else if (isset($_GET['token'])) {
             // Token
             $res = auth($_GET['token']);
             echo json_encode($res);
-        }
-        else if (isset($_GET['link'])) {
+        } else if (isset($_GET['link'])) {
             // View user page
             $res = viewUserPage($_GET['link']);
             echo json_encode($res);
-        }
-        else {
+        } else {
             // Get user info
             $res = getInfo();
             echo json_encode($res);
@@ -50,17 +46,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $data['avatar_save'] = isset($_FILES['avatar']['tmp_name']) ? $_FILES['avatar']['tmp_name'] : '';
             $res = updateUser($data);
             echo json_encode($res);
-        } 
-        else if (isset($_POST['action']) and $_POST['action'] == 'change-password') {
+        } else if (isset($_POST['action']) and $_POST['action'] == 'change-password') {
             // Update user password
             $data = array();
-            foreach($_POST as $key => $value) {
+            foreach ($_POST as $key => $value) {
                 $data[$key] = $value;
             }
             $res = updateUserPassword($data);
             echo json_encode($res);
-        }
-        else {
+        } else if (isset($_POST['action']) and $_POST['action'] == 'reset') {
+            // Reset password
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+            $res = resetPassword($password);
+            echo json_encode($res);
+        } else {
             // Create user
 
             $data = array(
@@ -82,8 +81,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 /** 
  *  AUTHENTICATION TOKEN
-*/
-function auth($token) {
+ */
+function auth($token)
+{
     include_once '../../lib/token.php';
     if (Token::authToken($token)) {
         return 'true';
@@ -94,8 +94,8 @@ function auth($token) {
 
 /** 
  *  LOG IN
-*/
-function login($username, $password) 
+ */
+function login($username, $password)
 {
     include_once '../../model/user.php';
     $userClass = new User();
@@ -105,14 +105,12 @@ function login($username, $password)
             'status' => 0,
             'message' => 'Vui lòng nhập tài khoản'
         );
-    } 
-    else if (empty($password)) {
+    } else if (empty($password)) {
         $response = array(
             'status' => 0,
             'message' => 'Vui lòng nhập mật khẩu'
         );
-    } 
-    else {
+    } else {
         $result = $userClass->login($username, $password);
         if ($result) {
             $response = array(
@@ -136,8 +134,8 @@ function login($username, $password)
 
 /** 
  *  LOG OUT
-*/
-function logout() 
+ */
+function logout()
 {
     include_once '../../model/user.php';
     $userClass = new User();
@@ -149,8 +147,8 @@ function logout()
 
 /** 
  *  GET USER INFO
-*/
-function getInfo() 
+ */
+function getInfo()
 {
     include_once '../../model/user.php';
     $userClass = new User();
@@ -161,15 +159,16 @@ function getInfo()
             'message' => 'Vui lòng đăng nhập'
         );
     } else {
-         $response = $userClass->getUserByUsername($access);
+        $response = $userClass->getUserByUsername($access);
     }
     return $response;
 }
 
 /** 
  *   VIEW USER PAGE
-*/
-function viewUserPage($link) {
+ */
+function viewUserPage($link)
+{
     include_once '../../model/user.php';
     include_once '../../model/post.php';
     $postClass = new Post();
@@ -184,7 +183,7 @@ function viewUserPage($link) {
 
 /** 
  *  INSERT USER
-*/
+ */
 function createUser($data)
 {
     include_once '../../model/user.php';
@@ -195,30 +194,26 @@ function createUser($data)
     if (empty($data['username']) or empty($data['password']) or empty($data['realname']) or empty($data['email']) or empty($data['re-password'])) {
         $response['status'] = 0;
         $response['message'] = 'Vui lòng nhập đầy đủ thông tin';
-    } 
-    else if ($data['password'] != $data['re-password']) {
+    } else if ($data['password'] != $data['re-password']) {
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu nhập không khớp';
-    }
-    else if (!$validate->validateEmail($data['email'])) {
+    } else if (!$validate->validateEmail($data['email'])) {
         $response['status'] = 0;
         $response['message'] = 'Email không hợp lệ';
-    } 
-    else if ($userClass->isUsernameExisted($data['username'])) {
+    } else if ($userClass->isUsernameExisted($data['username'])) {
         $response['status'] = 0;
         $response['message'] = 'Tài khoản đã tồn tại';
-    } 
-    else if ($userClass->isEmailExisted($data['username'], $data['email'])) {
+    } else if ($userClass->isEmailExisted($data['username'], $data['email'])) {
         $response['status'] = 0;
         $response['message'] = 'Email đã tồn tại';
-    } 
-    else if (!$validate->validateGender($data['gender'])) {
+    } else if (!$validate->validateGender($data['gender'])) {
         $response['status'] = 0;
         $response['message'] = 'Giới tính không hợp lệ';
-    } 
-    else {
+    } else {
         $data['username'] = $validate->filter($data['username']);
         $data['level'] = 0;
+        $data['link'] = base64_decode(uniqid($data['username']));
+        
         $userClass->insertUser($data);
         $userClass->insertUserInfo($data);
 
@@ -230,8 +225,8 @@ function createUser($data)
 
 /** 
  *  UPDATE USER
-*/
-function updateUser($data) 
+ */
+function updateUser($data)
 {
     include_once '../../model/user.php';
     $userClass = new User();
@@ -246,23 +241,32 @@ function updateUser($data)
         if (isset($data['username']) or empty($data['realname'])) {
             $response['status'] = 0;
             $response['message'] = 'Vui lòng nhập họ tên';
-        } 
-        else if (!isset($data['email']) or empty($data['email'])) {
+            return $response;
+        } else if (!isset($data['email']) or empty($data['email'])) {
             $response['status'] = 0;
             $response['message'] = 'Vui lòng nhập email';
-        } 
-        else if (!$validate->validateEmail($data['email'])) {
+            return $response;
+        } else if (!$validate->validateEmail($data['email'])) {
             $response['status'] = 0;
             $response['message'] = 'Email không hợp lệ';
-        } 
-        else if ($userClass->isEmailExisted($access ,$data['email'])) {
+            return $response;
+        } else if ($userClass->isEmailExisted($access, $data['email'])) {
             $response['status'] = 0;
             $response['message'] = 'Email đã tồn tại';
-        } 
-        else if (!isset($data['gender']) or !$validate->validateGender($data['gender'])) {
+            return $response;
+        } else if (!isset($data['gender']) or !$validate->validateGender($data['gender'])) {
             $response['status'] = 0;
             $response['message'] = 'Vui lòng chọn giới tính';
-        } 
+            return $response;
+        } else if (!isset($data['link']) or empty($data['link'])) {
+            $response['status'] = 0;
+            $response['message'] = 'Link không hợp lệ';
+            return $response;
+        } else if ($userClass->isLinkExisted($access, $data['link'])) {
+            $response['status'] = 0;
+            $response['message'] = 'Link đã tồn tại';
+            return $response;
+        }
         else {
             $data['username'] = $access;
             if ($data['description']) {
@@ -296,9 +300,10 @@ function updateUser($data)
 
 /** 
  *  UPDATE USER PASSWORD
-*/
+ */
 
-function updateUserPassword($data) {
+function updateUserPassword($data)
+{
     include_once '../../lib/session.php';
     include_once '../../model/user.php';
     $userClass = new User();
@@ -318,13 +323,11 @@ function updateUserPassword($data) {
         $response['status'] = 0;
         $response['message'] = 'Vui lòng nhập mật khẩu hiện tại và mật khẩu mới';
         return $response;
-    }
-    else if ($new_pw != $confirm_pw) {
+    } else if ($new_pw != $confirm_pw) {
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu nhập lại không khớp';
         return $response;
-    }
-    else if (!$userClass->login($access, $current_pw)) {
+    } else if (!$userClass->login($access, $current_pw)) {
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu hiện tại không chính xác';
         return $response;
@@ -333,12 +336,40 @@ function updateUserPassword($data) {
         if ($isSuccess) {
             $response['status'] = 1;
             $response['message'] = 'Đổi mật khẩu thành công';
-        }
-        else {
+        } else {
             $response['status'] = 0;
             $response['message'] = 'Đổi mật khẩu thất bại';
         }
         return $response;
     }
 }
-?>
+
+/** 
+ *  RESET PASSWORD
+ */
+function resetPassword($password)
+{
+    include_once '../../lib/session.php';
+    include_once '../../model/user.php';
+    $access = Session::get('email');
+    $userClass = new User();
+    $response = array();
+    if (empty($password)) {
+        $response['status'] = 0;
+        $response['message'] = 'Mật khẩu không được để trống';
+        return $response;
+    }
+    if (!$access) {
+        $response['status'] = 0;
+        $response['message'] = 'Bạn không có quyền truy cập';
+        return $response;
+    }
+    if ($userClass->resetPassword($password, $access)) {
+        $response['status'] = 1;
+        $response['message'] = 'Reset mật khẩu thành công';
+    } else {
+        $response['status'] = 0;
+        $response['message'] = 'Reset mật khẩu thất bại';
+    }
+    return $response;
+}

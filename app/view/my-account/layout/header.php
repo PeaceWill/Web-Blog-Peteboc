@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="form-group forgot__pass">
-                            <a href="">Bạn quên mật khẩu ?</a>
+                            <a href="recover-pw.html">Bạn quên mật khẩu ?</a>
                     </div>
                 </form>
             </div>

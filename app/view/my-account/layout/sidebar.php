@@ -22,12 +22,6 @@
                                 Lịch sử
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="token.php">
-                                <i class="fas fa-key"></i>
-                                Token
-                            </a>
-                        </li>
                     </ul>
                </div>
                

@@ -18,7 +18,16 @@ const uploadPost = () => {
             data: fd,
             contentType: false,
             processData: false
-        }).then((data) => { console.log(data) });
+        }).then((data) => { alertFunc(data) });
+    }
+}
+
+const alertFunc = (data) => {
+    data = JSON.parse(data);
+    if (data.status == 1) {
+        $alert(data.message, '#4484ba');
+    } else {
+        $alert(data.message, '#d54f3e');
     }
 }
 

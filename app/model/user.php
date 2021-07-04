@@ -135,9 +135,22 @@ class User extends Connection
     }
 
     // Check email existed
+    public function isEmail($email)
+    {
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email");
+        $stmt->execute(['email' => $email]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
+
+    // Check email existed
     public function isEmailExisted($username, $email)
     {
-        $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email AND username<>:username");
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email AND username<>:username LIMIT 1");
         $stmt->execute(['email' => $email,
                         'username' => $username]);
         $res = $stmt->fetch();
@@ -145,6 +158,20 @@ class User extends Connection
             return true;
         } 
         else {
+            return false;
+        }
+    }
+
+    // Check is link existed
+    public function isLinkExisted($username, $link)
+    {
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.link FROM $this->user_info_table WHERE link=:link AND username<>:username");
+        $stmt->execute(['link' => $link,
+                        'username' => $username]);
+        $res = $stmt->fetch();
+        if ($res) {
+            return true;
+        } else {
             return false;
         }
     }
@@ -189,7 +216,7 @@ class User extends Connection
         $phone = isset($data['phone']) ? $data['phone'] : '';
         $address = isset($data['address']) ? $data['address'] : '';
         $gender = $data['gender'];
-        $link = $data['username'];
+        $link = $data['link'];
         $description = isset($data['description']) ? $data['description'] : '';
 
         $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, description)
@@ -218,7 +245,7 @@ class User extends Connection
         $phone = isset($data['phone']) ? $data['phone'] : '';
         $address = isset($data['address']) ? $data['address'] : '';
         $gender = $data['gender'];
-        $link = $data['username'];
+        $link = $data['link'];
         $description = isset($data['description']) ? $data['description'] : '';
 
         $stmt = $this->link->prepare("UPDATE $this->user_info_table SET email=:email, realname=:realname, phone=:phone, address=:address, gender=:gender, link=:link, description=:description 
@@ -239,6 +266,7 @@ class User extends Connection
         }
     }
 
+    // update user state
     public function updateUserState($username, $state) {
         $stmt = $this->link->prepare("UPDATE $this->user_table SET $this->user_table.state=:state WHERE $this->user_table.username=:username");
         $stmt->execute(['state' => $state,
@@ -251,6 +279,7 @@ class User extends Connection
         }
     }
 
+    // Update user avatar
     public function updateAvatar($username, $avatar)
     {
         $type = pathinfo($avatar['name'], PATHINFO_EXTENSION);
@@ -271,6 +300,7 @@ class User extends Connection
         return true;
     }
 
+    // Update user password
     public function updateUserPassword($username, $password, $new_password)
     {
         $password = hash('sha256', $password);
@@ -286,5 +316,20 @@ class User extends Connection
             return false;
         }
     }
+
+    // Reset password by email
+    public function resetPassword($password, $email)
+    {
+        $password = hash('sha256', $password);
+        $stmt = $this->link->prepare("UPDATE $this->user_table, $this->user_info_table SET $this->user_table.password=:password 
+                                    WHERE $this->user_info_table.username=$this->user_table.username 
+                                    AND $this->user_info_table.email=:email");
+        $stmt->execute(['password' => $password,
+                        'email' => $email]);
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
-?>

@@ -3,10 +3,12 @@ class Session {
     public static function init() {
         if (version_compare(phpversion(), '5.4.0', '<')) {
             if (session_id() == '') {
+                //session_name('QkyzoasswiftzxTz');
                 session_start();
             }
         } else {
             if (session_status() == PHP_SESSION_NONE) {
+                //session_name('QkyzoasswiftzxTz');
                 session_start();
             }
         }

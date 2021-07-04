@@ -12,5 +12,6 @@ define('POST_TABLE', 'post');
 define('SHARE_TABLE', 'share');
 define('COMMENT_TABLE', 'comment');
 define('ABOUT_TABLE', 'about');
-define('LOG_TABLE', 'log')
+define('LOG_TABLE', 'log');
+define('RESET_PASSWORD_TABLE', 'reset_pw');
 ?>
