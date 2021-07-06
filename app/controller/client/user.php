@@ -280,6 +280,8 @@ function updateUser($data)
             $response['message'] = 'Link đã tồn tại';
             return $response;
         } else {
+            include_once '../../model/log.php';
+            $log = new Log();
             $data['username'] = $access;
             if ($data['description']) {
                 $data['description'] = $validate->filter($data['description']);
@@ -295,12 +297,14 @@ function updateUser($data)
                     );
                     $userClass->updateUserInfo($data);
                     $userClass->updateAvatar($access, $avatar);
+                    $log->insertUserAction($access, 'Cập nhập thông tin');
 
                     $response['status'] = 1;
                     $response['message'] = 'Cập nhập thành công';
                 }
             } else {
                 $userClass->updateUserInfo($data);
+                $log->insertUserAction($access, 'Cập nhập thông tin');
 
                 $response['status'] = 1;
                 $response['message'] = 'Cập nhập thành công';
@@ -319,7 +323,9 @@ function updateUserPassword($data)
 {
     include_once '../../lib/session.php';
     include_once '../../model/user.php';
+    include_once '../../lib/validate.php';
     $userClass = new User();
+    $validate = new Validate();
     $access = Session::get('user');
     $response = array();
 
@@ -340,6 +346,10 @@ function updateUserPassword($data)
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu nhập lại không khớp';
         return $response;
+    } else if (!$validate->validatePassword($new_pw)) {
+        $response['status'] = 0;
+        $response['message'] = 'Mật khẩu ít nhất 6 ký tự';
+        return $response;
     } else if (!$userClass->login($access, $current_pw)) {
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu hiện tại không chính xác';
@@ -347,6 +357,10 @@ function updateUserPassword($data)
     } else {
         $isSuccess = $userClass->updateUserPassword($access, $current_pw, $new_pw);
         if ($isSuccess) {
+            include_once '../../model/log.php';
+            $log = new Log();
+            $log->insertUserAction($access, 'Đổi mật khẩu');
+
             $response['status'] = 1;
             $response['message'] = 'Đổi mật khẩu thành công';
         } else {
@@ -378,6 +392,9 @@ function resetPassword($password)
         return $response;
     }
     if ($userClass->resetPassword($password, $access)) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Reset mật khẩu');
         $response['status'] = 1;
         $response['message'] = 'Reset mật khẩu thành công';
     } else {

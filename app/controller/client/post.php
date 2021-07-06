@@ -153,6 +153,10 @@ function uploadPost($data) {
     $data['mode'] = 1;
     $res = $postClass->insertPost($data);
     if ($res) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Đăng bài viết');
+
         $response = array(
             'status' => 1,
             'message' => 'Đăng bài viết thành công'
@@ -213,6 +217,11 @@ function updatePost($id, $content, $image, $image_save) {
             $response['message'] = 'Cập nhập không thành công';
         }
     }
+    if ($response['status'] == 1) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Cập nhập bài viết');
+    }
     return $response;
 }
 
@@ -232,6 +241,10 @@ function deletePost($id) {
     }
     $result = $postClass->deletePost($id, $access);
     if ($result) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Xóa bài viết');
+
         $response['status'] = 1;
         $response['message'] = 'Xóa thành công';
     }

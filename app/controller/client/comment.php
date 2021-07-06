@@ -85,6 +85,10 @@ function insertComment($post_id, $message)
     }
     $message = $validate->filter($message);
     if ($commentClass->insertComment($post_id, $access, $message)) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Comment trên diễn đàn');
+
         $response['status'] = 1;
         $response['message'] = 'Comment thành công';
     } else {
@@ -119,6 +123,10 @@ function updateComment($id, $message)
     $message = $validate->filter($message);
     $result = $commentClass->updateComment($id, $access, $message);
     if ($result) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Chỉnh sửa comment');
+
         $response['status'] = 1;
         $response['message'] = 'Cập nhập comment thành công';
     }
@@ -144,6 +152,10 @@ function deleteComment($id) {
         return $response;
     }
     if ($commentClass->deleteComment($id, $access)) {
+        include_once '../../model/log.php';
+        $log = new Log();
+        $log->insertUserAction($access, 'Xóa comment');
+
         $response['status'] = 1;
         $response['message'] = 'Xóa comment thành công';
     } else {

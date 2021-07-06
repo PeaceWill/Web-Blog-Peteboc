@@ -21,7 +21,7 @@ class Log extends Connection
     public function getUserAction($username)
     {
         $stmt = $this->link->prepare("SELECT $this->log_table.id, $this->log_table.action, $this->log_table.datetime
-                                     FROM $this->log_table WHERE username=:username");
+                                     FROM $this->log_table WHERE username=:username ORDER BY datetime DESC");
         $stmt->execute(['username' => $username]);
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
