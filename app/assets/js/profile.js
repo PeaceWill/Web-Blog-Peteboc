@@ -1,4 +1,4 @@
-var linkApi = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client`;
+var linkApi = `https://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client`;
 
 var fetchApi = (url, option, callback) => {
     fetch(url, {option})
