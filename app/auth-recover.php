@@ -15,7 +15,7 @@
     <?php
         $domain = $_SERVER['SERVER_NAME'];
     ?>
-    <form action="http://8bee97c9d723.ngrok.io/Web-Blog-Peteboc/app/controller/client/mail.php" type="GET">
+    <form action="http://localhost/Web-Blog-Peteboc/app/controller/client/mail.php" type="GET">
         <input type="hidden" name="token" value="<?php echo $_GET['token'] ?>">
         <input type="hidden" name="e" value="<?php echo $_GET['e'] ?>">
         <input type="hidden" name="email" value="<?php echo $_GET['email'] ?>">

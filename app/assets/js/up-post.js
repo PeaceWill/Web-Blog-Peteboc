@@ -25,7 +25,10 @@ const uploadPost = () => {
 const alertFunc = (data) => {
     data = JSON.parse(data);
     if (data.status == 1) {
-        $alert(data.message, '#4484ba');
+        $confirm(data.message, '#4484ba')
+            .then(() => {
+                window.location.reload();
+            });
     } else {
         $alert(data.message, '#d54f3e');
     }

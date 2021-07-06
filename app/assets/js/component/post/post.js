@@ -61,10 +61,7 @@ const postFooter = (postID) => {
                     <i class="far fa-comment pad-right-10"></i>
                     Bình luận
                 </span>
-                <span class="post__activity border-radius-smooth" id="post__share-activity">
-                    <i class="fas fa-share-square pad-right-10"></i>
-                    Chia sẻ
-                </span>
+                
             </div>`;
 }
 

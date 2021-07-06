@@ -117,6 +117,9 @@ function login($username, $password)
                 'status' => 1,
                 'message' => 'Đăng nhập thành công'
             );
+            include_once '../../model/log.php';
+            $logClass = new Log();
+            $logClass->insertUserAction($username, 'Đăng nhập');
             $userClass->updateUserState($username, 1);
             $display = $userClass->getUserByUsername($username);
             Session::set('user', $username);
@@ -222,6 +225,10 @@ function createUser($data)
 
         $userClass->insertUser($data);
         $userClass->insertUserInfo($data);
+
+        include_once '../../model/log.php';
+        $logClass = new Log();
+        $logClass->insertUserAction($data['username'], 'Tạo tài khoản thành công');
 
         $response['status'] = 1;
         $response['message'] = 'Tạo tài khoản thành công <3';

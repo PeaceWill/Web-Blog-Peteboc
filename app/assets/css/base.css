@@ -268,12 +268,20 @@ a {
     flex-direction: column;
 }
 
+.flex-growth-1 {
+    flex-grow: 1;
+}
 
 .flex-growth-2 {
     flex-grow: 2;
 }
 
 .flex-2 {
+    flex-grow: 2;
+    text-align: center;
+}
+
+.flex-1 {
     flex-grow: 2;
     text-align: center;
 }

@@ -1,4 +1,8 @@
 <?php
+    include_once 'lib/session.php';
+    if (!Session::checkSession('user')) {
+        header('location: index.php');
+    }
     include_once 'view/my-account/layout/header.php';
 ?>
     <div class="white__background__wrap">

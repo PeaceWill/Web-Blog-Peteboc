@@ -32,15 +32,15 @@
                                 <img id="post__image" src="" alt="">
                             </div>
                             <div class="post__footer">
-                                <span class="post__activity border-radius-smooth" id="upload__post">
+                                <span class="post__activity border-radius-smooth" id="upload__post" style="width: 45%;">
                                     <i class="fas fa-paint-brush pad-right-10 "></i>
                                     Đăng tải
                                 </span>
-                                <label class="button__upload-image" for="upload__image-post">
+                                <label class="button__upload-image" for="upload__image-post" style="width: 45%; text-align: center">
                                     <i class="fas fa-image pad-right-10 "></i>
                                     Upload image
                                 </label>
-                                <input type="file" id="upload__image-post" style="display: none;">
+                                <input type="file" id="upload__image-post" style="display: none">
                             </div>
                         </div>
                        </div>
