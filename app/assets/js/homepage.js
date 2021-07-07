@@ -1,6 +1,6 @@
-import { userPageInfo } from "./component/homepage/homepage";
-import { ownerPostAvatar, postHead, postSetting, postContent, postImage, postFooter } from "./component/post/post";
-import { commentsPost } from "./component/comment/comment";
+import { userPageInfo } from "./component/homepage/homepage.js";
+import { ownerPostAvatar, postHead, postSetting, postContent, postImage, postFooter } from "./component/post/post.js";
+import { commentsPost } from "./component/comment/comment.js";
 
 const callApi = (url, option, callback) => {
     fetch(url, {option})

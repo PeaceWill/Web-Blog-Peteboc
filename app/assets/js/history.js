@@ -1,4 +1,4 @@
-import { renderHistoryLog } from "./component/history-log";
+import { renderHistoryLog } from "./component/history-log.js";
 
 const fetchHistory = async (url) => {
     let data = await fetch(url);

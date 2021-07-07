@@ -5,7 +5,7 @@
     $expired = isset($_GET['e']) ? $_GET['e'] : '';
     $email = isset($_GET['email']) ? $_GET['email'] : '';
     if (!$_SESSION['auth-recover']) {
-        header("location: auth-recover?token=$token&e=$expired&email=$email");
+        header("location: auth-recover.php?token=$token&e=$expired&email=$email");
     }
     unset($_SESSION['auth-recover']);
 ?>
