@@ -51,6 +51,6 @@ class Mail
 
     static function generateLinkRecover($token, $expired, $email)
     {
-        return 'http://localhost/Web-Blog-Peteboc/app/reset-pw.php?token='.$token.'&e='.$expired.'&email='.$email;
+        return 'https://163ac30c9948421cba2c60d3114c3beb-18-c821a80-80.vlab.uit.edu.vn/Web-Blog-Peteboc/app/reset-pw.php?token='.$token.'&e='.$expired.'&email='.$email;
     }
 }
