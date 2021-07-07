@@ -46,7 +46,7 @@ function getEmail($email)
 function authToken($email, $token, $expired) {
     include_once '../../model/recover.php';
     $recover = new RecoverPassword();
-    $result = $recover->getToken($email);
+    $result = $recover->getToken($token, $email);
     date_default_timezone_set('Asia/Ho_Chi_Minh');
     $now = date('Y-m-d H:i:s');
     $nowTimestamp = strtotime($now);

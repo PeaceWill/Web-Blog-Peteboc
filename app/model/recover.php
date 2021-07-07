@@ -20,11 +20,12 @@ class RecoverPassword extends Connection
      */
 
     // Get token and expired
-    public function getToken($email)
+    public function getToken($token, $email)
     {
         $stmt = $this->link->prepare("SELECT $this->reset_table.token, $this->reset_table.expired 
-                                    FROM $this->reset_table WHERE email=:email");
-        $stmt->execute(['email' => $email]);
+                                    FROM $this->reset_table WHERE token=:token email=:email");
+        $stmt->execute(['token' => $token,
+                        'email' => $email]);
         $res = $stmt->fetch();
         if ($res) {
             return $res;
