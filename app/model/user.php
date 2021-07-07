@@ -304,8 +304,9 @@ class User extends Connection
     // Update user avatar
     public function updateAvatar($username, $avatar)
     {
+        $encryptName = hash_hmac('sha256', 'QOpzxd67xca', $username);
         $type = pathinfo($avatar['name'], PATHINFO_EXTENSION);
-        $image = $username . '.' . $type;
+        $image = $encryptName. '.' .$type;
         $image_save = $avatar['tmp_name'];
 
         if ($image_save != '') {

@@ -238,7 +238,7 @@ function createUser($data)
     } else {
         $data['username'] = $validate->filter($data['username']);
         $data['level'] = 0;
-        $data['link'] = base64_decode(uniqid($data['username']));
+        $data['link'] = md5(uniqid());
 
         $userClass->insertUser($data);
         $userClass->insertUserInfo($data);
