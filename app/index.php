@@ -9,199 +9,15 @@
                     <!-- Search -->
                     <div class="top__search__box border-radius-smooth ground-color-white mrg-top-40 box-shadow-6">
                         <div class="search__box">
-                            <input class="search__input" type="text" placeholder="Tìm kiếm">
-                            <a href="">
+                            <input class="search__input" type="text" placeholder="Tìm kiếm người quen ...">
+                            <a id="search__url" href="search.php">
                                 <i class="fas fa-search"></i>
                             </a>
                         </div>
                     </div>
                     <div id="post__area">
-
                         <!-- Post -->
-                        <!-- <div class="post__box border-radius-smooth ground-color-white box-shadow-6">
-                            <div class="post__box-body">
-                                <div class="post__heading">
-                                    <figure class="">
-                                        <img class="post__avatar circle-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    </figure>
-                                    <div class="flex-col pad-left-12 flex-growth-2">
-                                        <span class="font-verdana--geneva post__owner">Hưng Nguyễn</span>
-                                        <div style="display: flex;">
-                                            <span class="post__time">2021-06-20 11:30:26</span>
-                                            <span class="post__mode">
-                                                <i class="fas fa-unlock-alt"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span class="post__setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__setting-list box-shadow-6 font-rajdhani">
-                                            <li id="post__setting-edit" class="post__setting-select">Edit</li>
-                                            <li id="post__setting-report" class="post__setting-select">Report</li>
-                                            <li id="post__setting-remove" class="post__setting-select">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div class="post__content">
-                                    <p>Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI</p>
-                                </div>
-                            </div>
-                            <div class="post__box-image">
-                                <img src="./assets/img/post/pixel-slide1.jpg" alt="">
-                            </div>
-                            <div class="post__footer">
-                                <span class="post__activity border-radius-smooth" id="post__comment-activity">
-                                    <i class="far fa-comment"></i>
-                                    Bình luận
-                                </span>
-                                <span class="post__activity border-radius-smooth" id="post__share-activity">
-                                    <i class="fas fa-share-square"></i>
-                                    Chia sẻ
-                                </span>
-                            </div>
-                            <div class="post__comment-area">
-                                <div class="post__user__comment">
-                                    <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    <div class="post__user__comment-body">
-                                        <div>
-                                            <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
-                                            <span class="post__user__comment-time">2021-5-7</span>
-                                        </div>
-                                        <div class="post__user__comment-content">Đây là comment reply để test  Đây là comment reply để test Đây là comment reply để test Đây là comment reply để test</div>
-                                    </div>
-                                    <span class="post__user__comment-setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                            <li class="post__user__comment-setting-select comment__edit">Edit</li>
-                                            <li class="post__user__comment-setting-select commetn__remove">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div class="post__user__comment">
-                                    <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    <div class="post__user__comment-body">
-                                        <div>
-                                            <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
-                                            <span class="post__user__comment-time">2021-5-7</span>
-                                        </div>
-                                        <div class="post__user__comment-content">Đây là comment reply để test  Đây là comment reply để test Đây là comment reply để test Đây là comment reply để test</div>
-                                    </div>
-                                    <span class="post__user__comment-setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                            <li class="post__user__comment-setting-select comment__edit">Edit</li>
-                                            <li class="post__user__comment-setting-select commetn__remove">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                
-                                <div class="post__comment-load">
-                                    Xem tất cả bình luận
-                                </div>
-                            </div>
-                        </div> -->
-    
-                        <!-- Post share-->
-                        <!-- <div class="post__box post__shared border-radius-smooth ground-color-white box-shadow-6">
-                            <div class="post__box-body">
-                                <div class="post__heading">
-                                    <figure class="">
-                                        <img class="post__avatar circle-avatar circle-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    </figure>
-                                    <div class="flex-col pad-left-12 flex-growth-2">
-                                        <span class="font-verdana--geneva post__owner">Hưng Nguyễn</span>
-                                        <div style="display: flex;">
-                                            <span class="post__time">2021-06-20 11:30:26</span>
-                                            <span class="post__mode">
-                                                <i class="fas fa-unlock-alt"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <span class="post__setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__setting-list box-shadow-6 font-rajdhani">
-                                            <li id="post__setting-edit" class="post__setting-select">Edit</li>
-                                            <li id="post__setting-report" class="post__setting-select">Report</li>
-                                            <li id="post__setting-remove" class="post__setting-select">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div class="post__content">
-                                    <p>Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI Đây là 1 post test để xây dựng UI</p>
-                                </div>
-                            </div>
-                            <div class="post__box-image">
-                                <img src="./assets/img/post/pixel-slide1.jpg" alt="">
-                            </div>
-                            <div class="content__shared">
-                                <div class="content__shared-heading">
-                                    <a href="">
-                                        <span class="post__shared-username">gaughegom</span>
-                                    </a>
-                                    <span class="post__shared-time">2021 06 13</span>
-                                </div>
-                                <div class="content__shared-body">
-                                    Đây là nội dung để test UI share 1 post  Đây là nội dung để test UI share 1 post  Đây là nội dung để test UI share 1 post  Đây là nội dung để test UI share 1 post
-                                </div>
-                            </div>
-                            <div class="post__footer">
-                                <span class="post__activity border-radius-smooth" id="post__comment-activity">
-                                    <i class="far fa-comment"></i>
-                                    Bình luận
-                                </span>
-                                <span class="post__activity border-radius-smooth" id="post__share-activity">
-                                    <i class="fas fa-share-square"></i>
-                                    Chia sẻ
-                                </span>
-                            </div>
-                            <div class="post__comment-area">
-                                <div class="post__user__comment">
-                                    <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    <div class="post__user__comment-body">
-                                        <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
-                                        <div class="post__user__comment-content">Đây là comment reply để test  Đây là comment reply để test Đây là comment reply để test Đây là comment reply để test</div>
-                                    </div>
-                                    <span class="post__user__comment-setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                            <li class="post__user__comment-setting-select comment__edit">Edit</li>
-                                            <li class="post__user__comment-setting-select commetn__remove">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div class="post__user__comment">
-                                    <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    <div class="post__user__comment-body">
-                                        <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
-                                        <div class="post__user__comment-content">Đây là comment reply để test  Đây là comment reply để test Đây là comment reply để test Đây là comment reply để test</div>
-                                    </div>
-                                    <span class="post__user__comment-setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                            <li class="post__user__comment-setting-select comment__edit">Edit</li>
-                                            <li class="post__user__comment-setting-select commetn__remove">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div class="post__user__comment">
-                                    <img class="post__avatar circle-avatar post__user__comment-avatar" src="./assets/img/avatar/186608.jpg" alt="">
-                                    <div class="post__user__comment-body">
-                                        <span class="font-verdana--geneva post__user__comment-name">gaughegom</span>
-                                        <div class="post__user__comment-content">Đây là comment reply để test  Đây là comment reply để test Đây là comment reply để test Đây là comment reply để test</div>
-                                    </div>
-                                    <span class="post__user__comment-setting">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <ul class="post__user__comment-setting-list box-shadow-6 font-rajdhani">
-                                            <li class="post__user__comment-setting-select comment__edit">Edit</li>
-                                            <li class="post__user__comment-setting-select commetn__remove">Remove</li>
-                                        </ul>
-                                    </span>
-                                </div>
-                                <div class="post__comment-load">
-                                    Xem tất cả bình luận
-                                </div>
-                            </div>
-                        </div> -->
+  
                     </div>
                 </div>
             </div>
@@ -283,6 +99,7 @@
         </a>
     </div>
     <script type="module" src="./assets/js/post.js"></script>
+    <script type="module" src="./assets/js/autoUpdateSearchKey.js"></script>
     <script>
         closeEditPostModal();
         closeEditCommentModal();

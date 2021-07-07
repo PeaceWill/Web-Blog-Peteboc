@@ -4,7 +4,7 @@ Session::init();
 
 require_once 'connection.php';
 require_once '../../config/config.php';
-class User extends Connection 
+class User extends Connection
 {
     private $user_table = USER_TABLE;
     private $user_info_table = USER_INFO_TABLE;
@@ -15,20 +15,21 @@ class User extends Connection
 
     /** 
      *   SELECT FUNCTION
-    */
+     */
 
     // Login admin
-    public function login_admin($username, $password) 
+    public function login_admin($username, $password)
     {
         $password = hash('sha256', $password);
         $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password AND level=2");
-        $stmt->execute(['username' => $username,
-                        'password' => $password]);
+        $stmt->execute([
+            'username' => $username,
+            'password' => $password
+        ]);
         $res = $stmt->fetch();
         if ($res) {
             return $res;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -38,13 +39,14 @@ class User extends Connection
     {
         $password = hash('sha256', $password);
         $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password LIMIT 1");
-        $stmt->execute(['username' => $username,
-                        'password' => $password]);
+        $stmt->execute([
+            'username' => $username,
+            'password' => $password
+        ]);
         $res = $stmt->fetch();
         if ($res) {
             return $res;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -81,8 +83,7 @@ class User extends Connection
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($res) {
             return $res;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -100,8 +101,7 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return $res;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -115,21 +115,34 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return $res;
+        } else {
+            return false;
         }
-        else {
+    }
+
+    // Search user
+    public function searchUserName($key)
+    {
+        $stmt = $this->link->prepare("SELECT $this->user_info_table.realname, $this->user_info_table.avatar, $this->user_info_table.link
+                                    FROM $this->user_info_table WHERE realname LIKE CONCAT('%', :key, '%')");
+        $stmt->execute(['key' => $key]);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($res) {
+            return $res;
+        } else {
             return false;
         }
     }
 
     // Check username is existed
-    public function isUsernameExisted($username) {
+    public function isUsernameExisted($username)
+    {
         $stmt = $this->link->prepare("SELECT $this->user_table.username FROM $this->user_table WHERE username=:username");
         $stmt->execute(['username' => $username]);
         $res = $stmt->fetch();
         if ($res) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -151,13 +164,14 @@ class User extends Connection
     public function isEmailExisted($username, $email)
     {
         $stmt = $this->link->prepare("SELECT $this->user_info_table.email FROM $this->user_info_table WHERE email=:email AND username<>:username LIMIT 1");
-        $stmt->execute(['email' => $email,
-                        'username' => $username]);
+        $stmt->execute([
+            'email' => $email,
+            'username' => $username
+        ]);
         $res = $stmt->fetch();
         if ($res) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -166,8 +180,10 @@ class User extends Connection
     public function isLinkExisted($username, $link)
     {
         $stmt = $this->link->prepare("SELECT $this->user_info_table.link FROM $this->user_info_table WHERE link=:link AND username<>:username");
-        $stmt->execute(['link' => $link,
-                        'username' => $username]);
+        $stmt->execute([
+            'link' => $link,
+            'username' => $username
+        ]);
         $res = $stmt->fetch();
         if ($res) {
             return true;
@@ -184,15 +200,14 @@ class User extends Connection
         $res = $stmt->fetch();
         if ($res) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
-    } 
+    }
 
     /** 
      *   INSERT FUNCTION
-    */
+     */
 
     // Insert user
     public function insertUser($user)
@@ -202,9 +217,11 @@ class User extends Connection
         $level = $user['level'];
 
         $stmt = $this->link->prepare("INSERT INTO $this->user_table (username, password, level) VALUES (:username, :password, :level)");
-        $stmt->execute(['username' => $username,
-                        'password' => $password,
-                        'level' => $level]);
+        $stmt->execute([
+            'username' => $username,
+            'password' => $password,
+            'level' => $level
+        ]);
     }
 
     // Insert user info
@@ -221,20 +238,22 @@ class User extends Connection
 
         $stmt = $this->link->prepare("INSERT INTO $this->user_info_table (username, email, realname, phone, address, gender, link, description)
                                     VALUES (:username, :email, :realname, :phone, :address, :gender, :link, :description)");
-        $stmt->execute(['username' => $username,
-                        'email' => $email,
-                        'realname' => $realname,
-                        'phone' => $phone,
-                        'address' => $address,
-                        'gender' => $gender,
-                        'link' => $link,
-                        'description' => $description]);
+        $stmt->execute([
+            'username' => $username,
+            'email' => $email,
+            'realname' => $realname,
+            'phone' => $phone,
+            'address' => $address,
+            'gender' => $gender,
+            'link' => $link,
+            'description' => $description
+        ]);
     }
 
 
     /** 
      *   UPDATE FUNCTIOM
-    */
+     */
 
     // Update user info
     public function updateUserInfo($data)
@@ -250,31 +269,34 @@ class User extends Connection
 
         $stmt = $this->link->prepare("UPDATE $this->user_info_table SET email=:email, realname=:realname, phone=:phone, address=:address, gender=:gender, link=:link, description=:description 
                                     WHERE username=:username");
-        $stmt->execute(['email' => $email,
-                        'realname' => $realname,
-                        'phone' => $phone,
-                        'address' => $address,
-                        'gender' => $gender,
-                        'link' => $link,
-                        'description' => $description,
-                        'username' => $username]);
+        $stmt->execute([
+            'email' => $email,
+            'realname' => $realname,
+            'phone' => $phone,
+            'address' => $address,
+            'gender' => $gender,
+            'link' => $link,
+            'description' => $description,
+            'username' => $username
+        ]);
         if ($stmt) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }
 
     // update user state
-    public function updateUserState($username, $state) {
+    public function updateUserState($username, $state)
+    {
         $stmt = $this->link->prepare("UPDATE $this->user_table SET $this->user_table.state=:state WHERE $this->user_table.username=:username");
-        $stmt->execute(['state' => $state,
-                        'username' => $username]);
+        $stmt->execute([
+            'state' => $state,
+            'username' => $username
+        ]);
         if ($stmt) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -283,17 +305,19 @@ class User extends Connection
     public function updateAvatar($username, $avatar)
     {
         $type = pathinfo($avatar['name'], PATHINFO_EXTENSION);
-        $image = $username.'.'.$type;
+        $image = $username . '.' . $type;
         $image_save = $avatar['tmp_name'];
-    
+
         if ($image_save != '') {
             $stmt = $this->link->prepare("UPDATE $this->user_info_table SET avatar=:avatar WHERE username=:username");
-            $stmt->execute(['avatar' => $image,
-                            'username' => $username]);
-    
+            $stmt->execute([
+                'avatar' => $image,
+                'username' => $username
+            ]);
+
             if ($image_save != '') {
                 $targetFile = basename($image);
-                move_uploaded_file($image_save, '../../assets/img/avatar/'.$targetFile);
+                move_uploaded_file($image_save, '../../assets/img/avatar/' . $targetFile);
             }
         }
 
@@ -306,13 +330,14 @@ class User extends Connection
         $password = hash('sha256', $password);
         $new_password = hash('sha256', $new_password);
         $stmt = $this->link->prepare("UPDATE $this->user_table SET password=:new_password WHERE username=:username AND password=:password");
-        $stmt->execute(['new_password' => $new_password,
-                        'username' => $username,
-                        'password' => $password]);
+        $stmt->execute([
+            'new_password' => $new_password,
+            'username' => $username,
+            'password' => $password
+        ]);
         if ($stmt) {
             return true;
-        } 
-        else {
+        } else {
             return false;
         }
     }
@@ -324,8 +349,10 @@ class User extends Connection
         $stmt = $this->link->prepare("UPDATE $this->user_table, $this->user_info_table SET $this->user_table.password=:password 
                                     WHERE $this->user_info_table.username=$this->user_table.username 
                                     AND $this->user_info_table.email=:email");
-        $stmt->execute(['password' => $password,
-                        'email' => $email]);
+        $stmt->execute([
+            'password' => $password,
+            'email' => $email
+        ]);
         if ($stmt) {
             return true;
         } else {

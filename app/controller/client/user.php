@@ -26,6 +26,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
             // View user page
             $res = viewUserPage($_GET['link']);
             echo json_encode($res);
+        } else if (isset($_GET['f'])) {
+            $res = searchUser($_GET['f']);
+            echo json_encode($res);
         } else {
             // Get user info
             $res = getInfo();
@@ -167,6 +170,17 @@ function getInfo()
     } else {
         $response = $userClass->getUserByUsername($access);
     }
+    return $response;
+}
+
+/**  
+ *  SEARCH USER
+*/
+function searchUser($key)
+{
+    include_once '../../model/user.php';
+    $userClass = new User();
+    $response = $userClass->searchUserName($key);
     return $response;
 }
 
