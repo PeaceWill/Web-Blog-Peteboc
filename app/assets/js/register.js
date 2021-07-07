@@ -1,5 +1,5 @@
 const button = document.querySelector('#register__button');
-const link = `https://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/user.php`;
+const link = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/user.php`;
 
 button.onclick = (e) => {
     e.preventDefault();

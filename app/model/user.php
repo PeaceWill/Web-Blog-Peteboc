@@ -37,7 +37,7 @@ class User extends Connection
     public function login($username, $password)
     {
         $password = hash('sha256', $password);
-        $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password AND level<>2 LIMIT 1");
+        $stmt = $this->link->prepare("SELECT * FROM $this->user_table WHERE username=:username AND password=:password LIMIT 1");
         $stmt->execute(['username' => $username,
                         'password' => $password]);
         $res = $stmt->fetch();

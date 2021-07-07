@@ -39,12 +39,13 @@ function getCommentsByPostID($postID)
 {
     include_once '../../lib/session.php';
     include_once '../../model/comment.php';
+    $root = Session::get('root');
     $access = Session::get('user');
     $commentClass = new Comment();
     $response = $commentClass->getCommentsByPostId($postID);
     if ($response) {
         foreach ($response as $key => $value) {
-            if (isset($access) and $access == $value['username']) {
+            if ((isset($access) and $access == $value['username']) or ($root)) {
                 $response[$key]['owner'] = true;
             } 
             else {
@@ -143,9 +144,23 @@ function updateComment($id, $message)
 function deleteComment($id) {
     include_once '../../lib/session.php';
     include_once '../../model/comment.php';
+    $root = Session::get('root');
     $access = Session::get('user');
     $commentClass = new Comment();
     $response = array();
+
+    if ($root) {
+        $result = $commentClass->deleteCommentByAdmin($id);
+        if ($result) {
+            $response['status'] = 1;
+            $response['message'] = 'Xóa comment thành công';
+        } else {
+            $response['status'] = 0;
+            $response['message'] = 'Không thể xóa comment';
+        }
+        return $response;
+    }
+
     if (!$commentClass->isOwnerComment($id, $access)) {
         $response['status'] = 0;
         $response['message'] = 'Bạn không có quyền truy cập <3';

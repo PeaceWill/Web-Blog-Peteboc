@@ -1,4 +1,4 @@
-const linkApi = `https://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/mail.php`;
+const linkApi = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/mail.php`;
 const email = document.querySelector('input[name=email]');
 var sendButton = document.querySelector('#submit-email');
 sendButton.onclick = (event) => {

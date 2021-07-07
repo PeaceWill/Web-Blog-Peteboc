@@ -241,5 +241,16 @@ class Post extends Connection
             return false;
         }
     }
+
+    public function deletePostByAdmin($id)
+    {
+        $stmt = $this->link->prepare("DELETE FROM $this->post_table WHERE id=:id");
+        $stmt->execute(['id' => $id]);
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>

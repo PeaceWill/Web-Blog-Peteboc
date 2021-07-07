@@ -1,4 +1,4 @@
-const linkApi = `https://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/user.php`;
+const linkApi = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/user.php`;
 const submitButton = document.querySelector('button');
 submitButton.onclick = (event) => {
     event.preventDefault();

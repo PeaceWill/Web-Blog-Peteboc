@@ -63,11 +63,12 @@ function getAllPost() {
     include_once '../../lib/session.php';
     include_once '../../model/post.php';
     $access = Session::get('user');
+    $root = Session::get('root');
     $postClass = new Post();
     $response = $postClass->getAllPublicPost();
     if ($response) {
         foreach($response as $key => $value) {
-            if (isset($access) and $access == $value['username']) {
+            if ((isset($access) and $access == $value['username']) or ($root)) {
                 $response[$key]['owner'] = true;
             } 
             else {
@@ -88,12 +89,13 @@ function getAllPost() {
 function getUserPostByLink($link) {
     include_once '../../lib/session.php';
     include_once '../../model/post.php';
+    $root = Session::get('root');
     $access = Session::get('user');
     $postClass = new Post();
     $response = $postClass->getUserPostByLink($link);
     if ($response) {
         foreach($response as $key => $value) {
-            if ($access == $value['username']) {
+            if (($access == $value['username']) or ($root)) {
                 $response[$key]['owner'] = true;
             } else {
                 $response[$key]['owner'] = false;
@@ -232,8 +234,27 @@ function deletePost($id) {
     include_once '../../lib/session.php';
     include_once '../../model/post.php';
     $access = Session::get('user');
+    $root = Session::get('root');
     $postClass = new Post();
     $response = array();
+
+    if ($root) {
+        $result = $postClass->deletePostByAdmin($id);
+        if ($result) {
+            include_once '../../model/comment.php';
+            $comment = new Comment();
+            $comment->deleteCommentOfPost($id);
+
+            $response['status'] = 1;
+            $response['message'] = 'Xóa thành công';
+        }
+        else {
+            $response['status'] = 0;
+            $response['message'] = 'Xóa thất bại';
+        }
+        return $response;
+    }
+
     if (!$postClass->isOwner($id, $access)) {
         $response['status'] = 0;
         $response['message'] = 'Bạn không có quyền truy cập <3';
@@ -242,8 +263,11 @@ function deletePost($id) {
     $result = $postClass->deletePost($id, $access);
     if ($result) {
         include_once '../../model/log.php';
+        include_once '../../model/comment.php';
         $log = new Log();
+        $comment = new Comment();
         $log->insertUserAction($access, 'Xóa bài viết');
+        $comment->deleteCommentOfPost($id);
 
         $response['status'] = 1;
         $response['message'] = 'Xóa thành công';

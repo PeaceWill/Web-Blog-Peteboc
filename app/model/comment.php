@@ -106,5 +106,25 @@ class Comment extends Connection
             return false;
         }
     }
+
+    public function deleteCommentByAdmin($id) {
+        $stmt = $this->link->prepare("DELETE FROM $this->comment_table WHERE id=:id");
+        $stmt->execute(['id' => $id]);
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteCommentOfPost($post_id) {
+        $stmt = $this->link->prepare("DELETE FROM $this->comment_table WHERE post_id=:post_id");
+        $stmt->execute(['post_id' => $post_id]);
+        if ($stmt) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>

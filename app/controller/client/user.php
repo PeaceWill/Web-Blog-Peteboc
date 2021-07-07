@@ -122,6 +122,9 @@ function login($username, $password)
             $logClass->insertUserAction($username, 'Đăng nhập');
             $userClass->updateUserState($username, 1);
             $display = $userClass->getUserByUsername($username);
+            if ($username === 'admin') {
+                Session::set('root', $username);
+            }
             Session::set('user', $username);
             Session::set('display', $display['realname']);
             Session::set('link', $display['link']);

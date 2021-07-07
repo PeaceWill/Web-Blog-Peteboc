@@ -6,7 +6,7 @@ const commentsPost = (avatarURL, displayName, datetime, content, link, owner, co
                 </a>
                 <div class="post__user__comment-body">
                     <div>
-                        <a class="font-verdana--geneva post__user__comment-name" href="user?link=${link}">${displayName}</a>
+                        <a class="font-verdana--geneva post__user__comment-name" href="user.php?link=${link}">${displayName}</a>
                         <span class="post__user__comment-time">${datetime}</span>
                     </div>
                     <div class="post__user__comment-content">${content}</div>

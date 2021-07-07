@@ -1,4 +1,4 @@
-var link = `https://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/about.php`;
+var link = `http://${window.location.hostname}/Web-Blog-Peteboc/app/controller/client/about.php`;
 let content = document.querySelector('.article__content');
 
 fetch(link, { method: 'GET' })
