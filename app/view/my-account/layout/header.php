@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="./assets/js/asteroid-alert.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <!-- header -->
@@ -122,7 +123,9 @@
                     <div class="form-group">
                         <button id="log__button" class="modal__form__submit-button">Đăng nhập</button>
                     </div>
-
+                    <div class="form-group">
+                    <!-- <div class="g-recaptcha" data-sitekey="6LcBnIEbAAAAAHRZCppsTm1tWwcLk-Oi0X2c9ccD"></div> -->
+                    </div>
                     <div class="form-group forgot__pass">
                             <a href="recover-pw.html">Bạn quên mật khẩu ?</a>
                     </div>

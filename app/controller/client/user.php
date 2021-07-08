@@ -394,13 +394,20 @@ function updateUserPassword($data)
 function resetPassword($password)
 {
     include_once '../../lib/session.php';
+    include_once '../../lib/validate.php';
     include_once '../../model/user.php';
     $access = Session::get('email');
+    $validate = new Validate();
     $userClass = new User();
     $response = array();
     if (empty($password)) {
         $response['status'] = 0;
         $response['message'] = 'Mật khẩu không được để trống';
+        return $response;
+    }
+    if (!$validate->validatePassword($password)) {
+        $response['status'] = 0;
+        $response['message'] = 'Mật khẩu không hợp lệ';
         return $response;
     }
     if (!$access) {

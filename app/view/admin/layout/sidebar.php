@@ -1,7 +1,6 @@
 <?php
-    session_start();
     include_once '../../lib/session.php';
-    
+    Session::init();
     if ($_SERVER['REQUEST_METHOD'] == 'GET' and isset($_GET['action']) and $_GET['action'] == 'logout') {
         include '../../model/user.php';
         $userClass = new User();

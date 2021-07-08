@@ -1,11 +1,10 @@
 <?php
-if (session_id() == '') {
-    session_start();
-}
 require_once '../../model/user.php';
 require_once '../../lib/session.php';
+Session::init();
 $userClass = new User();
-if (Session::checkSession('root')) {
+$access = Session::get('root');
+if ($access) {
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
             if (isset($_GET['action']) and $_GET['action'] == 'count') {

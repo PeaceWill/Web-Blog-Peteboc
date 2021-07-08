@@ -1,8 +1,6 @@
 <?php
-    if (session_id() == '') {
-        session_start();
-    }
     include_once '../../lib/session.php';
+    Session::init();
     $isLog = Session::checkSession('root');
     if ($isLog) {
         header('Location: index.php');
