@@ -362,12 +362,19 @@ function updateUser($data)
 function updateUserPassword($data)
 {
     include_once '../../lib/session.php';
+    include_once '../../lib/token.php';
     include_once '../../model/user.php';
     include_once '../../lib/validate.php';
     $userClass = new User();
     $validate = new Validate();
     $access = Session::get('user');
     $response = array();
+
+    if (!Token::authToken($data['token'])) {
+        $response['status'] = 0;
+        $response['message'] = 'Không có quyền';
+        return $response;
+    }
 
     if (!$access) {
         $response['status'] = 0;
@@ -403,6 +410,7 @@ function updateUserPassword($data)
 
             $response['status'] = 1;
             $response['message'] = 'Đổi mật khẩu thành công';
+            Token::renewToken();
         } else {
             $response['status'] = 0;
             $response['message'] = 'Đổi mật khẩu thất bại';

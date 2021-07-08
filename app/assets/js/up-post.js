@@ -1,4 +1,4 @@
-import { previewImage } from "./component/provider/previewImage"
+import { previewImage } from "./component/provider/previewImage.js"
 
 const uploadImage = () => {
     previewImage('#upload__image-post', '#post__image');

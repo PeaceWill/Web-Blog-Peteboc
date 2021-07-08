@@ -90,6 +90,7 @@
                                     <label class="font-rajdhani">Nhập lại mật khẩu</label>
                                     <input class="form__profile-input" type="password" name="comfirm-pw">
                                 </div>
+                                <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
                                 <input type="hidden" name="action" value="change-password">
                                 <div class="form__profile-group">
                                     <button id="update__user-password" class="submit-button--smooth">Cập nhập</button>
