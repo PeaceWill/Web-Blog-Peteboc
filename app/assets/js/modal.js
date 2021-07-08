@@ -59,6 +59,7 @@ function openEditPostModal(postID) {
         fd.append('content', content);
         fd.append('id', postID);
         fd.append('action', 'update');
+        fd.append('token', document.querySelector('input[name=token]').value);
         const option = {
             url: `${linkApi}/post.php`,
             type: 'POST',
@@ -83,10 +84,11 @@ function openEditCommentModal(commentID) {
     const buttonSubmit = editModal.querySelector('#edit__comment');
     buttonSubmit.onclick = () => {
         const commentMessage = editModal.querySelector('#edit__comment-input').value;
+        const token = document.querySelector('input[name=token]').value;
         const option = {
             url: `${linkApi}/comment.php`,
             type: 'PUT',
-            data: `action=update&id=${commentID}&message=${commentMessage}`,
+            data: `action=update&id=${commentID}&message=${commentMessage}&token=${token}`,
         }
         sendAjax(option, reloadPage);
     }
@@ -105,10 +107,11 @@ function openAddCommentModal(postID) {
     const buttonSubmit = addComment.querySelector('#add__comment');
     buttonSubmit.onclick = () => {
         const commentMessage = addComment.querySelector('#add__comment-input').value;
+        const token = document.querySelector('input[name=token]').value;
         const option = {
             url: `${linkApi}/comment.php`,
             type: 'POST',
-            data: `post_id=${postID}&message=${commentMessage}`
+            data: `post_id=${postID}&message=${commentMessage}&token=${token}`
         }
         sendAjax(option, reloadPage);
         
@@ -214,7 +217,7 @@ function login() {
         event.preventDefault();
         option = {
             url: `${linkApi}/user.php`,
-            type: 'GET',
+            type: 'POST',
             data: $('#form__modal-log').serialize()
         }
         sendAjax(option, renderModal);

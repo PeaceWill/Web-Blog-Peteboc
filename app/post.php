@@ -3,6 +3,7 @@
     if (!Session::checkSession('user')) {
         header('location: index.php');
     }
+    Session::init();
     include_once 'view/my-account/layout/header.php';
     include_once 'view/my-account/layout/sidebar.php';
 ?>
@@ -27,6 +28,7 @@
                                 <div class="post__content">
                                     <textarea class="post__textarea" name="content" class="" cols="30" rows="8" placeholder="Bạn muốn đăng gì ..."></textarea>
                                 </div>
+                                <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
                             </div>
                             <div class="post__box-image">
                                 <img id="post__image" src="" alt="">

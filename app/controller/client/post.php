@@ -25,9 +25,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if (isset($_POST['action']) and $_POST['action'] == 'update') {
             $id = isset($_POST['id']) ? $_POST['id'] : '';
             $content = isset($_POST['content']) ? $_POST['content']: '';
+            $token = isset($_POST['token']) ? $_POST['token'] : '';
             $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : '';
             $image_save = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
-            $res = updatePost($id, $content, $image, $image_save);
+            $res = updatePost($id, $content, $image, $image_save, $token);
             echo json_encode($res);
         }
         else {
@@ -38,10 +39,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $data[$key] = $value;
                 }
             }
+            $token = isset($_POST['token']) ? $_POST['token'] : '';
             $data['image'] = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : '';
             $data['image_type'] = isset($_FILES['image']['type']) ? $_FILES['image']['type'] : '';
             $data['image_tmp'] = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
-            $res = uploadPost($data);
+            $res = uploadPost($data, $token);
             echo json_encode($res);
         }
         break;
@@ -127,9 +129,10 @@ function getPostById($id) {
 /** 
  *   UPLOAD POST
 */
-function uploadPost($data) {
+function uploadPost($data, $token) {
     include_once '../../lib/validate.php';
     include_once '../../lib/session.php';
+    include_once '../../lib/token.php';
     include_once '../../model/post.php';
     $access = Session::get('user');
     $validate = new Validate();
@@ -138,6 +141,13 @@ function uploadPost($data) {
         $response = array(
             'status' => 0,
             'message' => 'Vui lòng đăng nhập'
+        );
+        return $response;
+    }
+    if (!Token::authToken($token)) {
+        $response = array(
+            'status' => 0,
+            'message' => 'Không có quyền'
         );
         return $response;
     }
@@ -163,6 +173,7 @@ function uploadPost($data) {
             'status' => 1,
             'message' => 'Đăng bài viết thành công'
         );
+        Token::renewToken();
     } else {
         $response = array(
             'status' => 0,
@@ -175,15 +186,21 @@ function uploadPost($data) {
 /** 
  *  UPDATE POST
 */
-function updatePost($id, $content, $image, $image_save) {
+function updatePost($id, $content, $image, $image_save, $token) {
     include_once '../../lib/session.php';
     include_once '../../lib/validate.php';
+    include_once '../../lib/token.php';
     include_once '../../model/post.php';
     $access = Session::get('user');
     $validate = new Validate();
     $postClass = new Post();
     $response = array();
     $content = $validate->filter($content);
+    if (!Token::authToken($token) or empty($token)) {
+        $response['status'] = 0;
+        $response['message'] = $token;
+        return $response;
+    }
     if (!$id) {
         $response['status'] = 0;
         $response['message'] = 'ID không hợp lệ';
@@ -223,6 +240,7 @@ function updatePost($id, $content, $image, $image_save) {
         include_once '../../model/log.php';
         $log = new Log();
         $log->insertUserAction($access, 'Cập nhập bài viết');
+        Token::renewToken();
     }
     return $response;
 }

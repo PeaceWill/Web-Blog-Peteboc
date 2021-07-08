@@ -12,14 +12,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
         $post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
         $message = isset($_POST['message']) ? $_POST['message'] : '';
-        $res = insertComment($post_id, $message);
+        $token = isset($_POST['token']) ? $_POST['token'] : '';
+        $res = insertComment($post_id, $message, $token);
         echo json_encode($res);
         break;
     case 'PUT':
         parse_str(file_get_contents('php://input'), $put);
         $id = isset($put['id']) ? $put['id'] : '';
         $message = isset($put['message']) ? $put['message'] : '';
-        $res = updateComment($id, $message);
+        $token = isset($put['token']) ? $put['token'] : '';
+        $res = updateComment($id, $message, $token);
         echo json_encode($res);
         break;
     case 'DELETE':
@@ -63,10 +65,11 @@ function getCommentsByPostID($postID)
 /** 
  *   INSERT COMMENT 
 */
-function insertComment($post_id, $message)
+function insertComment($post_id, $message, $token)
 {
     include_once '../../lib/session.php';
     include_once '../../lib/validate.php';
+    include_once '../../lib/token.php';
     include_once '../../model/comment.php';
     include_once '../../model/post.php';
     $access = Session::get(('user'));
@@ -74,6 +77,11 @@ function insertComment($post_id, $message)
     $commentClass = new Comment();
     $postClass = new Post();
     $response = array();
+    if (!Token::authToken($token)) {
+        $response['status'] = 0;
+        $response['message'] = 'Không có quyền';
+        return $response;
+    }
     if (!$access) {
         $response['status'] = 0;
         $response['message'] = 'Vui lòng đăng nhập';
@@ -92,6 +100,7 @@ function insertComment($post_id, $message)
 
         $response['status'] = 1;
         $response['message'] = 'Comment thành công';
+        Token::renewToken();
     } else {
         $response['status'] = 0;
         $response['message'] = 'Comment thất bại';
@@ -102,15 +111,21 @@ function insertComment($post_id, $message)
 /** 
  *   UPDATE COMMENT
 */
-function updateComment($id, $message)
+function updateComment($id, $message, $token)
 {
     include_once '../../lib/session.php';
     include_once '../../lib/validate.php';
+    include_once '../../lib/token.php';
     include_once '../../model/comment.php';
     $access = Session::get('user');
     $validate = new Validate();
     $commentClass = new Comment();
     $response = array();
+    if (!Token::authToken($token)) {
+        $response['status'] = 0;
+        $response['message'] = 'Không có quyền';
+        return $response;
+    }
     if (empty($id) or empty($message)) {
         $response['status'] = 0;
         $response['message'] = 'Biểu mẫu không hợp lệ';
@@ -130,6 +145,7 @@ function updateComment($id, $message)
 
         $response['status'] = 1;
         $response['message'] = 'Cập nhập comment thành công';
+        Token::renewToken();
     }
     else {
         $response['status'] = 0;

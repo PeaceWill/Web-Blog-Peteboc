@@ -10,6 +10,12 @@ class Token
         return $token;
     }
 
+    public static function renewToken() {
+        $newToken = md5(uniqid(rand(), true));
+        $_SESSION['token'] = $newToken;
+        return $newToken;
+    }
+
     public static function authToken($token)
     {
         if (isset($_SESSION['token'])) {

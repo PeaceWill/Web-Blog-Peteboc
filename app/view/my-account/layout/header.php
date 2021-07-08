@@ -124,7 +124,7 @@
                         <button id="log__button" class="modal__form__submit-button">Đăng nhập</button>
                     </div>
                     <div class="form-group">
-                    <!-- <div class="g-recaptcha" data-sitekey="6LcBnIEbAAAAAHRZCppsTm1tWwcLk-Oi0X2c9ccD"></div> -->
+                    <div class="g-recaptcha" data-sitekey="6LcBnIEbAAAAAHRZCppsTm1tWwcLk-Oi0X2c9ccD"></div>
                     </div>
                     <div class="form-group forgot__pass">
                             <a href="recover-pw.html">Bạn quên mật khẩu ?</a>

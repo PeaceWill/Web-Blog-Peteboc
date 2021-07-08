@@ -34,6 +34,7 @@
                             <i class="fas fa-times"></i>
                         </span>
                     </div>
+                    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
                     <textarea name="edit__comment" id="edit__comment-input" cols="30" rows="3"></textarea>
                     <button id="edit__comment">Save</button>
                 </div>
@@ -51,6 +52,7 @@
                             <i class="fas fa-times"></i>
                         </span>
                     </div>
+                    <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
                     <textarea name="add__comment" id="add__comment-input" cols="30" rows="3"></textarea>
                     <button id="add__comment">Submit</button>
                 </div>
@@ -78,6 +80,7 @@
                                 </span>
                             </div>
                         </div>
+                        <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
                         <textarea class="form__edit-content" id="form__edit-content" rows="4"> </textarea>
                     </div>
                     <div class="form__edit__image">

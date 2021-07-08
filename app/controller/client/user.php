@@ -5,16 +5,7 @@ Session::init();
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        if (isset($_GET['username']) and isset($_GET['password'])) {
-            // Log in
-            $username = isset($_GET['username']) ? $_GET['username'] : '';
-            $password = isset($_GET['password']) ? $_GET['password'] : '';
-            $res = login($username, $password);
-            if ($res['status'] == 1) {
-                $res['token'] = Token::generateToken();
-            }
-            echo json_encode($res);
-        } else if (isset($_GET['action']) and $_GET['action'] == 'logout') {
+        if (isset($_GET['action']) and $_GET['action'] == 'logout') {
             // Log out
             $res = logout();
             header('location:../../index.php');
@@ -36,7 +27,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case 'POST':
-        if (isset($_POST['action']) and $_POST['action'] == 'update') {
+        if (isset($_POST['username']) and isset($_POST['password'])) {
+            // Log in
+            $username = isset($_POST['username']) ? $_POST['username'] : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+            $captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
+            $res = login($username, $password, $captcha);
+            if ($res['status'] == 1) {
+                $res['token'] = Token::generateToken();
+            }
+            echo json_encode($res);
+        } else if (isset($_POST['action']) and $_POST['action'] == 'update') {
             // Update user info
             $data = array();
             if (isset($_POST['data'])) {
@@ -98,10 +99,29 @@ function auth($token)
 /** 
  *  LOG IN
  */
-function login($username, $password)
+function login($username, $password, $captcha)
 {
     include_once '../../model/user.php';
     $userClass = new User();
+
+    if (empty($captcha)) {
+        $response = array(
+            'status' => 0,
+            'message' => 'Tích capchat'
+        );
+        return $response;
+    } else {
+        $secret_key = '6LcBnIEbAAAAAN7nu_ujBh7TOc8c2Fa0Imryk1Vt';
+        $captcha_res = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret_key.'&response='.$captcha);
+        $captcha_data = json_decode($captcha_res);
+        if (!$captcha_data->success) {
+            $response = array(
+                'status' => 0,
+                'message' => 'Captcha không hợp lệ'
+            ); 
+            return $response;
+        }
+    }
 
     if (empty($username)) {
         $response = array(
@@ -116,9 +136,11 @@ function login($username, $password)
     } else {
         $result = $userClass->login($username, $password);
         if ($result) {
+            include_once '../../lib/token.php';
+            $token = Token::generateToken();
             $response = array(
                 'status' => 1,
-                'message' => 'Đăng nhập thành công'
+                'message' => 'Đăng nhập thành công',
             );
             include_once '../../model/log.php';
             $logClass = new Log();
@@ -131,6 +153,7 @@ function login($username, $password)
             Session::set('user', $username);
             Session::set('display', $display['realname']);
             Session::set('link', $display['link']);
+            
         } else {
             $response = array(
                 'status' => 0,
@@ -175,7 +198,7 @@ function getInfo()
 
 /**  
  *  SEARCH USER
-*/
+ */
 function searchUser($key)
 {
     include_once '../../model/user.php';

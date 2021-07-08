@@ -12,6 +12,7 @@ const uploadPost = () => {
         let fd = new FormData();
         fd.append('image', image);
         fd.append('data', JSON.stringify(data));
+        fd.append('token', document.querySelector('input[name=token]').value);
         $.ajax({
             url: `${linkApi}/post.php`,
             type: 'POST',
