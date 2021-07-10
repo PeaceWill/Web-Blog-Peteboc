@@ -116,6 +116,7 @@
                             Mật khẩu
                         </label>
                         <input class="form-input" required type="password" name="password">
+                        <input type="hidden" name="action" value="login">
                     </div>
                     <div class="form-group">
                         <span class="modal__error__message" id="modal__error__message-login"></span>

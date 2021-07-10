@@ -27,7 +27,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case 'POST':
-        if (isset($_POST['username']) and isset($_POST['password'])) {
+        if (isset($_POST['username']) and isset($_POST['password']) and isset($_POST['action']) and $_POST['action']=='login') {
             // Log in
             $username = isset($_POST['username']) ? $_POST['username'] : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
